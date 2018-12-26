@@ -12,7 +12,6 @@ markdown.xml
 .idea/
 *.iml
 *.iws
-*.xml
 
 # Mac
 .DS_Store
