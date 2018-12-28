@@ -11,9 +11,15 @@ public class Main {
         User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
         Nodes[] nodes = gson.fromJson(new FileReader("Datasets/nodes.json"), Nodes[].class);
         Server[] servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
-        //backtracking - >condicion que haya usuario, y que vaya añadiendo
+        //Distribucion carga
+        //backtracking -> condicion que haya usuario, y que vaya añadiendo
         // hasta que vea que se ha pasado de peso(este ultimo tambien se añade)
-        //
-        //relacion greedy-> numero de horas/distancia
+        //branch&bound -> igual que en backtracking?
+        //relacion greedy -> numero de horas/distancia
+
+        //Camino mas rapido y mas fiable
+        //backtracking -> camino mas rapido y mas fiable tsp
+        //branch&bound -> " "
+        //greedy -> ordenando por las conexiones mas rapidas y las mas fiables
     }
 }
