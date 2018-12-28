@@ -4,7 +4,7 @@ public class Connection {
 
     private String username;
 
-    private int since;
+    private long since;
 
     private int visits;
 
@@ -20,7 +20,7 @@ public class Connection {
         this.username = username;
     }
 
-    public int getSince() {
+    public long getSince() {
         return since;
     }
 

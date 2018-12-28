@@ -1,6 +1,5 @@
 package Json;
 
-import Json.ConnectsTo;
 
 import java.util.List;
 

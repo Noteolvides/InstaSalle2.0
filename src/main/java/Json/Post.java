@@ -7,7 +7,7 @@ public class Post {
 
     private int id;
 
-    private int published;
+    private long published;
 
     private List<Double> location = null;
 
@@ -25,7 +25,7 @@ public class Post {
         this.id = id;
     }
 
-    public int getPublished() {
+    public long getPublished() {
         return published;
     }
 
