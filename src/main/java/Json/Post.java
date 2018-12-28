@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Post {
 
-    private Integer id;
+    private int id;
 
-    private Integer published;
+    private int published;
 
     private List<Double> location = null;
 
@@ -17,7 +17,7 @@ public class Post {
     @SerializedName("commented_by")
     private List<String> commentedBy = null;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -25,7 +25,7 @@ public class Post {
         this.id = id;
     }
 
-    public Integer getPublished() {
+    public int getPublished() {
         return published;
     }
 

@@ -2,20 +2,18 @@ package Json;
 
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
-
 public class User {
-    @SerializedName("username")
+
     private String username;
-    @SerializedName("followers")
-    private Integer followers;
-    @SerializedName("follows")
-    private Integer follows;
-    @SerializedName("activity")
+
+    private int followers;
+
+    private int follows;
+
     private Double activity;
-    @SerializedName("connections")
+
     private List<Connection> connections = null;
-    @SerializedName("posts")
+
     private List<Post> posts = null;
 
     public String getUsername() {
@@ -26,7 +24,7 @@ public class User {
         this.username = username;
     }
 
-    public Integer getFollowers() {
+    public int getFollowers() {
         return followers;
     }
 
@@ -34,7 +32,7 @@ public class User {
         this.followers = followers;
     }
 
-    public Integer getFollows() {
+    public int getFollows() {
         return follows;
     }
 

@@ -4,13 +4,13 @@ public class Connection {
 
     private String username;
 
-    private Integer since;
+    private int since;
 
-    private Integer visits;
+    private int visits;
 
-    private Integer likes;
+    private int likes;
 
-    private Integer comments;
+    private int comments;
 
     public String getUsername() {
         return username;
@@ -20,35 +20,35 @@ public class Connection {
         this.username = username;
     }
 
-    public Integer getSince() {
+    public int getSince() {
         return since;
     }
 
-    public void setSince(Integer since) {
+    public void setSince(int since) {
         this.since = since;
     }
 
-    public Integer getVisits() {
+    public int getVisits() {
         return visits;
     }
 
-    public void setVisits(Integer visits) {
+    public void setVisits(int visits) {
         this.visits = visits;
     }
 
-    public Integer getLikes() {
+    public int getLikes() {
         return likes;
     }
 
-    public void setLikes(Integer likes) {
+    public void setLikes(int likes) {
         this.likes = likes;
     }
 
-    public Integer getComments() {
+    public int getComments() {
         return comments;
     }
 
-    public void setComments(Integer comments) {
+    public void setComments(int comments) {
         this.comments = comments;
     }
 
