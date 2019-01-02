@@ -1,6 +1,5 @@
 public class Greedy {
-   /*public Solution greedy(boolean found) {
-
+   public Solution greedy(boolean found) {
         Candidate[] candidates;
         Solution s;
         found = false;
@@ -16,5 +15,21 @@ public class Greedy {
             }
         }
         return s;
-    }*/
+   }
+
+    private boolean is_solution (){
+        boolean issolution;
+
+        return issolution;
+    }
+
+    private boolean is_feasible(){
+       boolean isfeasible;
+
+       return  isfeasible;
+    }
+
+    private void addSolution(){
+
+    }
 }
