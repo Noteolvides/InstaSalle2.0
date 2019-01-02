@@ -1,3 +1,5 @@
+package Carga;
+
 import java.util.PriorityQueue;
 
 public class BranchBound {

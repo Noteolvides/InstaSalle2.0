@@ -1,6 +1,12 @@
+package Disponibilidad;
+
+import Json.Nodes;
+
+import java.util.List;
+
 public class BackTracking {
 
-  public void backTracking (Solution s) {
+  public void backTracking (List<Nodes> s) {
     if (bt(s)) {
       handleSolution(s);
     } else {

@@ -1,3 +1,5 @@
+package Carga;
+
 public class Greedy {
    public Solution greedy(boolean found) {
         Candidate[] candidates;
