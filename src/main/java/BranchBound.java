@@ -1,7 +1,7 @@
 import java.util.PriorityQueue;
 
 public class BranchBound {
-   /* public Solution branchAndBound(){
+   public Solution branchAndBound(){
         Solution x, best;
         PriorityQueue<Solution> live_nodes = null;
         Solution[] options;
@@ -25,5 +25,25 @@ public class BranchBound {
             }
         }
         return best;
-    }*/
+   }
+
+   private void minmax(){
+
+   }
+
+    private boolean is_solution (){
+        boolean issolution;
+
+        return issolution;
+    }
+
+    private boolean is_promising (){
+        boolean ispromising;
+
+        return ispromising;
+    }
+
+    private void expand(){
+
+    }
 }
