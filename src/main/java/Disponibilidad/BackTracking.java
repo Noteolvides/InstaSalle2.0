@@ -12,13 +12,15 @@ public class BackTracking {
     }else{
       int size = s.getPath().size();
       Nodes option;
+      int optioncost;
       for (int i = 0; i < s.getPath().get(size).getConnectsTo().size()/*options*/; i++){
         for (int j = 0; j < nodes.length; j++) {
           if (nodes[j].getId() == s.getPath().get(size).getConnectsTo().get(i).getTo()) {
             option = nodes[j];
+            optioncost = s.getPath().get(size).getConnectsTo().get(i).getCost();
           }
         }
-        if (promising(s, option) && s.getTotalcost() <= best.getTotalcost()){
+        if (promising(s, option, optioncost, best) && s.getTotalcost() <= best.getTotalcost()){
           s.addNode(option);
           best = millorPathBT(s, best);
           s.removeNode(s.getPath().size());
@@ -28,10 +30,8 @@ public class BackTracking {
     return best;
   }
 
-  private boolean promising (Solution s, Nodes option){
-    boolean ispromising;
-
-    return ispromising;
+  private boolean promising (Solution s, Nodes option, int optioncost, Solution best){
+    return (s.getTotalcost() + optioncost) > best.getTotalcost();
   }
 
   private Solution minmax(Solution s, Solution best){
