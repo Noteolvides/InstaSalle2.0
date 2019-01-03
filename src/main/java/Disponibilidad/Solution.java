@@ -22,4 +22,12 @@ public class Solution {
     public void setTotalcost(int totalcost) {
         this.totalcost = totalcost;
     }
+
+    public void addNode(Nodes node){
+        this.path.add(node);
+    }
+
+    public void removeNode(int index){
+        this.path.remove(index);
+    }
 }

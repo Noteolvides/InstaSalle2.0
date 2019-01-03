@@ -19,12 +19,13 @@ public class BackTracking {
           }
         }
         if (promising(s, option) && s.getTotalcost() <= best.getTotalcost()){
-          s = addOption(s, option);
+          s.addNode(option);
           best = millorPathBT(s, best);
-          s = removeOption(s, option);
+          s.removeNode(s.getPath().size());
         }
       }
     }
+    return best;
   }
 
   private boolean promising (Solution s, Nodes option){
@@ -36,14 +37,6 @@ public class BackTracking {
   private Solution minmax(Solution s, Solution best){
 
     return best;
-  }
-
-  private Solution addOption(Solution s, Nodes option){
-
-  }
-
-  private Solution removeOption(Solution s, Nodes option){
-
   }
 
   private boolean bt(Solution s){
