@@ -4,27 +4,21 @@ import Json.Nodes;
 import java.util.List;
 
 public class BackTracking {
+  private Nodes[] nodes;
 
-  /*public void backTracking (List<Nodes> s) {
-    if (bt(s)) {
-      handleSolution(s);
-    } else {
-      for (int i = 0; i < options; i++) {
-        if (promising(s, option)) {
-          s = addOption(option);
-          backTracking(s);
-          s = removeOption(option);
-        }
-      }
-    }
-  }*/
-
-  public List<Nodes> millorPathBT (List<Nodes> s, List<Nodes> best){
+  public Solution millorPathBT (Solution s, Solution best){
     if (bt(s)){
       best = minmax(s, best);
     }else{
-      for (int i = 0; i < s.size()/*options*/; i++){
-        if (promising(s, option) && s <= best){
+      int size = s.getPath().size();
+      Nodes option;
+      for (int i = 0; i < s.getPath().get(size).getConnectsTo().size()/*options*/; i++){
+        for (int j = 0; j < nodes.length; j++) {
+          if (nodes[j].getId() == s.getPath().get(size).getConnectsTo().get(i).getTo()) {
+            option = nodes[j];
+          }
+        }
+        if (promising(s, option) && s.getTotalcost() <= best.getTotalcost()){
           s = addOption(s, option);
           best = millorPathBT(s, best);
           s = removeOption(s, option);
@@ -33,26 +27,26 @@ public class BackTracking {
     }
   }
 
-  private boolean promising (List<Nodes> s){
+  private boolean promising (Solution s, Nodes option){
     boolean ispromising;
 
     return ispromising;
   }
 
-  private List<Nodes> minmax(List<Nodes> s, List<Nodes> best){
+  private Solution minmax(Solution s, Solution best){
 
     return best;
   }
 
-  private void addOption(){
+  private Solution addOption(Solution s, Nodes option){
 
   }
 
-  private void removeOption(){
+  private Solution removeOption(Solution s, Nodes option){
 
   }
 
-  private boolean bt(List<Nodes> s){
+  private boolean bt(Solution s){
     boolean isbt;
 
     return isbt;
