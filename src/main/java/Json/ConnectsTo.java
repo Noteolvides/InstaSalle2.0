@@ -9,7 +9,7 @@ public class ConnectsTo {
     private int cost;
 
     public int getTo() {
-        return to;
+        return to-1;
     }
 
     public void setTo(int to) {

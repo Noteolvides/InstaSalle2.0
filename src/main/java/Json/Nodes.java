@@ -9,6 +9,8 @@ public class Nodes {
 
     private Double reliability;
 
+    private int selected = 0;
+
     private List<ConnectsTo> connectsTo = null;
 
     public int getId() {
@@ -35,4 +37,21 @@ public class Nodes {
         this.connectsTo = connectsTo;
     }
 
+    public void setSelected(){
+        selected = 1;
+    }
+
+    public void clearSelected() {
+        selected = 0;
+    }
+
+    public ConnectsTo getConnectsTo(int x){
+        return connectsTo.get(x);
+    }
+
+    public int getSelected(){return selected;}
+
+    public int getLenghtOfConexions(){
+        return connectsTo.size();
+    }
 }
