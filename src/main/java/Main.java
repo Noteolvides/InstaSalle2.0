@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -27,12 +28,14 @@ public class Main {
         System.out.println(bd.winPath);
         */
 
-
-        int totalActitvity = 0;
+        int totalActitvity;
+        ArrayList<Double> activities = new ArrayList<Double>();
         for (User h : usersList){
-            totalActitvity += h.getActivity();
+            activities.add((h.getActivity()));
         }
-        totalActitvity = totalActitvity/servers.length-7;
+        Collections.sort(activities);
+        totalActitvity= (int) Math.round((activities.get(activities.size() / 2)));
+
         System.out.println(totalActitvity+"\n");
 
         for (int j = 0; j < servers.length; j++){
