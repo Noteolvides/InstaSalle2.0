@@ -1,7 +1,7 @@
 import Json.Nodes;
 
 import java.util.ArrayList;
-import java.util.Stack;
+
 
 public class BackDist implements InterficieBacktraking{
     private Nodes[] nodes;
@@ -19,7 +19,7 @@ public class BackDist implements InterficieBacktraking{
     }
 
 
-    public boolean bt(int i) {
+    public boolean bt(int i,int sum) {
         return nodes[i].getId() == to;
     }
 
@@ -33,8 +33,8 @@ public class BackDist implements InterficieBacktraking{
         return nodes[i].getLenghtOfConexions();
     }
 
-    public boolean promising(int dist,int i, int x) {
-        return dist + nodes[i].getConnectsTo(x).getCost() < best && nodes[nodes[i].getConnectsTo(x).getTo()].getSelected() != 1;
+    public boolean promising(int sum,int i, int x) {
+        return sum + nodes[i].getConnectsTo(x).getCost() < best && nodes[nodes[i].getConnectsTo(x).getTo()].getSelected() != 1;
     }
 
     public void set(int i,int x) {

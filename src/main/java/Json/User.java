@@ -10,11 +10,36 @@ public class User {
 
     private int follows;
 
-    private Double activity;
+    private double activity;
 
     private List<Connection> connections = null;
 
     private List<Post> posts = null;
+
+    private double distance;
+
+    public int getSelected() {
+        return selected;
+    }
+
+    private int selected = 1;
+
+    public void setSelected(){
+        selected = 1;
+    }
+
+    public void clearSelected() {
+        selected = 0;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
 
     public String getUsername() {
         return username;
@@ -40,11 +65,11 @@ public class User {
         this.follows = follows;
     }
 
-    public Double getActivity() {
+    public double getActivity() {
         return activity;
     }
 
-    public void setActivity(Double activity) {
+    public void setActivity(double activity) {
         this.activity = activity;
     }
 

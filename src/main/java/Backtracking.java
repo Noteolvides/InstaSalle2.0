@@ -1,13 +1,13 @@
 public class Backtracking {
-     static void backTracking (int i,int sum,InterficieBacktraking interback){
-        if (interback.bt(i)){
-            interback.handleSolution(i,sum);
+     static void backTracking (int i,int sum,InterficieBacktraking operation){
+        if (operation.bt(i,sum)){
+            operation.handleSolution(i,sum);
         }else{
-            for(int x = 0; x < interback.getEndOptions(i); x++){
-                if (interback.promising(sum,i,x)){
-                    interback.set(i,x);
-                    backTracking(interback.next(i,x),sum + interback.agregation(i,x),interback);
-                    interback.unSet(i,x);
+            for(int x = 0; x < operation.getEndOptions(i); x++){
+                if (operation.promising(sum,i,x)){
+                    operation.set(i,x);
+                    backTracking(operation.next(i,x),sum + operation.agregation(i,x),operation);
+                    operation.unSet(i,x);
                 }
             }
         }
