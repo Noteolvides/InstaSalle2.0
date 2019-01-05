@@ -3,22 +3,28 @@ import Json.User;
 import java.util.ArrayList;
 
 public class BackServ implements InterficieBacktraking {
-    private User[] users;
+    private ArrayList<User> users;
     private int media;
-    private int best;
+    private int bestDist;
+
+    private int bestMedia;
+
     private int actualDist = 0;
-    public ArrayList winUsers;
+    public ArrayList<Integer> winUsers;
     private ArrayList<Integer> usersTemp = new ArrayList<Integer>();
     private int error = 0;
-
-    public int getBest() {
-        return best;
+    public int getbestDist() {
+        return bestDist;
     }
 
-    public BackServ(User[] users, int media) {
+    public int getBestMedia() {
+        return bestMedia;
+    }
+
+    public BackServ(ArrayList<User> users, int media) {
         this.users = users;
         this.media = media;
-        this.best = 999999999;
+        this.bestDist = 999999999;
     }
 
 
@@ -28,7 +34,7 @@ public class BackServ implements InterficieBacktraking {
             error = 0;
             return true;
         }
-        if (i > users.length-1){
+        if (i > users.size()-1){
             error = 1;
             return true;
         }
@@ -38,7 +44,8 @@ public class BackServ implements InterficieBacktraking {
 
     public void handleSolution(int i, int best) {
         if (error == 0){
-            this.best = actualDist;
+            this.bestDist = actualDist;
+            this.bestMedia = best;
             winUsers = (ArrayList)usersTemp.clone();
         }
     }
@@ -48,19 +55,19 @@ public class BackServ implements InterficieBacktraking {
     }
 
     public boolean promising(int sum, int i, int x) {
-        return actualDist+users[i].getDistance() < best || x == 1;
+        return actualDist+users.get(i).getDistance() < bestDist || x == 1;
     }
 
     public void set(int i, int x) {
         if (x == 0){
-            actualDist+= users[i].getDistance();
-            usersTemp.add(i);
+            actualDist+= users.get(i).getDistance();
+            usersTemp.add(users.get(i).getId());
         }
     }
 
     public void unSet(int i, int x) {
         if (x == 0){
-            actualDist -= users[i].getDistance();
+            actualDist -= users.get(i).getDistance();
             usersTemp.remove(usersTemp.size()-1);
         }
     }
@@ -71,7 +78,7 @@ public class BackServ implements InterficieBacktraking {
 
     public int agregation(int i, int x) {
         if (x == 0){
-            return (int) users[i].getActivity();
+            return (int) users.get(i).getActivity();
         }
         return 0;
     }

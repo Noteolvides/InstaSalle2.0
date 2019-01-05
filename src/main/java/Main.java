@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,6 +14,10 @@ public class Main {
         User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
         Nodes[] nodes = gson.fromJson(new FileReader("Datasets/datasets++/nodes_plus.json"), Nodes[].class);
         Server[] servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
+        for (int c = 0; c < users.length; c++) {
+            users[c].setId(c);
+        }
+        ArrayList<User> usersList= new ArrayList<User>(Arrays.asList(users));
         /*
         int from = 1;
         int to = 9;
@@ -22,21 +27,37 @@ public class Main {
         System.out.println(bd.winPath);
         */
 
-        int totalActitvity = 0;
-        for (User i: users){
-            List<Double> location = i.getPosts().get(i.getPosts().size()-1).getLocation();
-            i.setDistance(Haversine.distance(location.get(0),location.get(1),45.6721,22));
-            totalActitvity += i.getActivity();
-        }
-        System.out.println(totalActitvity);
-        totalActitvity = totalActitvity/servers.length;
-        System.out.println(totalActitvity);
 
-        BackServ bs = new BackServ(users,totalActitvity);
-        Backtracking.backTracking(0,0,bs);
-        System.out.println(users);
-        System.out.println(bs.getBest());
-        System.out.println(bs.winUsers);
+        int totalActitvity = 0;
+        for (User h : usersList){
+            totalActitvity += h.getActivity();
+        }
+        totalActitvity = totalActitvity/servers.length-7;
+        System.out.println(totalActitvity+"\n");
+
+        for (int j = 0; j < servers.length; j++){
+            for (User i: usersList){
+                List<Double> locationSer = servers[j].getLocation();
+                List<Double> location = i.getPosts().get(i.getPosts().size()-1).getLocation();
+                i.setDistance(Haversine.distance(location.get(0),location.get(1),locationSer.get(0),locationSer.get(1)));
+            }
+            BackServ bs = new BackServ(usersList,totalActitvity);
+            Backtracking.backTracking(0,0,bs);
+            System.out.println("Best - Media " +bs.getBestMedia());
+            System.out.println("Best - Dist " + bs.getbestDist());
+            System.out.println("Array de usuarios " + bs.winUsers);
+            User selec = null;
+            for (Integer k: bs.winUsers) {
+                for (User m: usersList){
+                    if(m.getId() == (int)k){
+                        selec = m;
+                    }
+                }
+                usersList.remove(selec);
+            }
+            System.out.println("Cuantos Quedan "+usersList.size() +"\n");
+        }
+    }
         /*
         //Distribucion carga
         //Backtracking -> condicion que haya usuario, y que vaya añadiendo
@@ -49,5 +70,5 @@ public class Main {
         //branch&bound -> " "
         //greedy -> ordenando por las conexiones mas rapidas y las mas fiables
         */
-    }
+
 }
