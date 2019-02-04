@@ -1,3 +1,5 @@
+package BackTracking;
+
 public interface InterficieBacktraking {
     boolean bt(int i,int sum);
     void handleSolution(int i,int best);

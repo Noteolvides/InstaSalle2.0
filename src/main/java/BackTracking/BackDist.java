@@ -1,9 +1,12 @@
+package BackTracking;
+
+import BackTracking.InterficieBacktraking;
 import Json.Nodes;
 
 import java.util.ArrayList;
 
 
-public class BackDist implements InterficieBacktraking{
+public class BackDist implements InterficieBacktraking {
     private Nodes[] nodes;
     private int from;
     private int to;
