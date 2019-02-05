@@ -27,6 +27,16 @@ public class User {
 
     private double distance;
 
+    private double latitude;
+    private double longitude;
+
+    public double getLatitude() {
+        return latitude;
+    }
+    public double getLongitude() {
+        return longitude;
+    }
+
     public int getSelected() {
         return selected;
     }
@@ -98,4 +108,9 @@ public class User {
         this.posts = posts;
     }
 
+    public void setUbication() {
+        List<Double> aux = this.posts.get(this.posts.size()-1).getLocation();
+        latitude = aux.get(0);
+        longitude = aux.get(1);
+    }
 }

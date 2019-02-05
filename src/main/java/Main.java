@@ -17,7 +17,9 @@ public class Main {
         Server[] servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
         for (int c = 0; c < users.length; c++) {
             users[c].setId(c);
+            users[c].setUbication();
         }
+
         ArrayList<User> usersList= new ArrayList<User>(Arrays.asList(users));
 
         int from = 1;

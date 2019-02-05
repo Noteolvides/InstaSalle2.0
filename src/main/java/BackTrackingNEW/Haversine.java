@@ -1,5 +1,7 @@
+package BackTrackingNEW;
+
 public class Haversine {
-    private static final int EARTH_RADIUS = 6371; // Approx Earth radius in KM
+    private static final int EARTH_RADIUS = 6371;
 
     public static double distance(double startLat, double startLong,
                                   double endLat, double endLong) {

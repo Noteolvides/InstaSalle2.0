@@ -6,10 +6,10 @@ public class BackNew {
             solution.handleSolution();
         }else{
             for(int x = 0; x < solution.getEndOptions(); x++){
-                if (solution.promising()){
-                    solution.set();
-                    backTracking(solution.getNext());
-                    solution.unSet();
+                if (solution.promising(x)){
+                    solution.set(x);
+                    backTracking(solution.getNext(x));
+                    solution.unSet(x);
                 }
             }
         }

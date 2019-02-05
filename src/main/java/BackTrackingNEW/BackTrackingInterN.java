@@ -7,11 +7,11 @@ public interface BackTrackingInterN {
 
     int getEndOptions();
 
-    boolean promising();
+    boolean promising(int next);
 
-    void set();
+    void set(int next);
 
-    BackTrackingInterN getNext();
+    BackTrackingInterN getNext(int next);
 
-    void unSet();
+    void unSet(int next);
 }
