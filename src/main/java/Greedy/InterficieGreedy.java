@@ -1,10 +1,12 @@
 package Greedy;
 
+import java.util.ArrayList;
+
 public interface InterficieGreedy {
-    Solution init_solution();
-    Candidate[] init_candidates();
+    ArrayList<Integer> init_solution();
+    int[] init_candidates();
     boolean candidatesToCheck();
-    Candidate select(Candidate[] candidates);
-    boolean is_feasible(Solution s, Candidate c);
-    boolean is_solution(Solution s);
+    int select(int[] candidates);
+    boolean is_feasible(ArrayList<Integer> s, int c);
+    boolean is_solution(ArrayList<Integer> s);
 }

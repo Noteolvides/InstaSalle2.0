@@ -4,7 +4,7 @@ import Json.Nodes;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class BranchBound {
+public class Branchbound {
     public static List<Nodes> branchAndBound(int t, int sum, InterficieBranchBound operation) {
         List<Nodes> x, best;
         PriorityQueue<List<Nodes>> live_nodes = null;
