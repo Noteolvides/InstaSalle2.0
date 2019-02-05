@@ -48,7 +48,7 @@ public class Main {
             }
             BackServ bs = new BackServ(usersList,totalActitvity);
             Backtracking.backTracking(0,0,bs);
-            System.out.println("Best - Media " +bs.getBestMedia());
+            System.out.println("Best - Media " + bs.getBestMedia());
             System.out.println("Best - Dist " + bs.getbestDist());
             System.out.println("Array de usuarios " + bs.winUsers);
             User selec = null;
@@ -60,7 +60,7 @@ public class Main {
                 }
                 usersList.remove(selec);
             }
-            System.out.println("Cuantos Quedan "+usersList.size() +"\n");
+            System.out.println("Cuantos Quedan " + usersList.size() +"\n");
         }
     }
         /*
