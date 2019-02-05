@@ -1,4 +1,4 @@
-import BackTracking.BackServ;
+import BackTracking.BackDist;
 import BackTracking.Backtracking;
 import Json.*;
 import com.google.gson.Gson;
@@ -8,8 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
@@ -21,46 +19,13 @@ public class Main {
             users[c].setId(c);
         }
         ArrayList<User> usersList= new ArrayList<User>(Arrays.asList(users));
-        /*
+
         int from = 1;
         int to = 9;
         BackDist bd = new BackDist(nodes,from,to);
         Backtracking.backTracking(from-1,0,bd);
         System.out.println(bd.getBest());
         System.out.println(bd.winPath);
-        */
-
-        int totalActitvity;
-        ArrayList<Double> activities = new ArrayList<Double>();
-        for (User h : usersList){
-            activities.add((h.getActivity()));
-        }
-        Collections.sort(activities);
-        totalActitvity= (int) Math.round((activities.get(activities.size() / 2)));
-
-        System.out.println(totalActitvity+"\n");
-
-        for (int j = 0; j < servers.length; j++){
-            for (User i: usersList){
-                List<Double> locationSer = servers[j].getLocation();
-                List<Double> location = i.getPosts().get(i.getPosts().size()-1).getLocation();
-                i.setDistance(Haversine.distance(location.get(0),location.get(1),locationSer.get(0),locationSer.get(1)));
-            }
-            BackServ bs = new BackServ(usersList,totalActitvity);
-            Backtracking.backTracking(0,0,bs);
-            System.out.println("Best - Media " + bs.getBestMedia());
-            System.out.println("Best - Dist " + bs.getbestDist());
-            System.out.println("Array de usuarios " + bs.winUsers);
-            User selec = null;
-            for (Integer k: bs.winUsers) {
-                for (User m: usersList){
-                    if(m.getId() == (int)k){
-                        selec = m;
-                    }
-                }
-                usersList.remove(selec);
-            }
-            System.out.println("Cuantos Quedan " + usersList.size() +"\n");
         }
     }
         /*
@@ -76,4 +41,4 @@ public class Main {
         //greedy -> ordenando por las conexiones mas rapidas y las mas fiables
         */
 
-}
+
