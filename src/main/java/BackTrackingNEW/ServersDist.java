@@ -25,6 +25,8 @@ public class ServersDist implements BackTrackingInterN {
         ServersDist sd = new ServersDist(users,servers);
         BackNew.backTracking(sd);
         sd.printArray(sd.wins);
+        System.out.println("La distancia minima es : " + sd.minimaDistancia);
+        System.out.println("La Actividad minima es : " + sd.minimaActividad);
     }
 
     private void printArray(int[] x) {
@@ -38,8 +40,8 @@ public class ServersDist implements BackTrackingInterN {
     private Server[] servidores;
     private int[] reparticion;
     public int[] wins;
-    private float minimaActividad = 999999999;
-    private double minimaDistancia = 9999999;
+    public float minimaActividad = 999999999;
+    public double minimaDistancia = 9999999;
     private double distanciaActual = 0;
     private int[] actividadActualServidores;
     private int puntero = 0;
