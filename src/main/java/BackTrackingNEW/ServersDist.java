@@ -24,6 +24,7 @@ public class ServersDist implements BackTrackingInterN {
         }
         ServersDist sd = new ServersDist(users,servers);
         BackNew.backTracking(sd);
+        sd.printArray(sd.wins);
     }
 
     private void printArray(int[] x) {
@@ -62,10 +63,12 @@ public class ServersDist implements BackTrackingInterN {
             minimaActividad = aux;
             minimaDistancia = distanciaActual;
             wins = reparticion.clone();
+            /*
             printArray(wins);
             System.out.println("La Minima distancia es " + minimaDistancia);
             System.out.println("La Minima actividad es " + minimaActividad);
             printArray(actividadActualServidores);
+            */
         }
     }
 
@@ -90,13 +93,10 @@ public class ServersDist implements BackTrackingInterN {
     }
 
     public boolean promising(int next) {
-        //List<Double> aux = servidores[reparticion.get(next)].getLocation();
-        /*
-        return distanciaActual+
-                Haversine.distance(usuarios[reparticion.size()-1].getLatitude(),usuarios[reparticion.size()-1].getLongitude(),aux.get(0),aux.get(1)) <
-                minimaDistancia ||
-                */
-        return true;
+        List<Double> aux = servidores[next].getLocation();
+        return distanciaActual +
+                Haversine.distance(usuarios[puntero].getLatitude(),usuarios[puntero].getLongitude(),aux.get(0),aux.get(1))
+                < minimaDistancia;
     }
 
     public void set(int next) {
