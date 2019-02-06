@@ -1,28 +1,18 @@
 package Greedy;
 
 public class Greedy {
-    public static Solution greedy(InterficieGreedy operation) {
-        Candidate[] candidates;
-        Solution s;
+    public static void greedy(InterficieGreedy operation) {
         boolean found = false;
+        int i = 0;
 
-        s = operation.init_solution();
-        candidates = operation.init_candidates();
-
-        while (!found && operation.candidatesToCheck()) {
-            Candidate c = operation.select(candidates);
-            if (operation.is_feasible(s, c)) {
-                s = add(s, c);
+        while (!found && operation.candidatesToCheck(i)) {
+            int c = operation.select(i);
+            if (operation.is_feasible(i, c)) {
+                operation.addCandidate(i);
             }
-            if (operation.is_solution(s)) {
+            if (operation.is_solution(i)) {
                 found = true;
             }
         }
-
-        if (!found){
-            s = null;
-        }
-
-        return s;
     }
 }
