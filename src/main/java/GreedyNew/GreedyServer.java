@@ -64,15 +64,18 @@ public class GreedyServer {
         for (int i = 0; i < reparticion.length; i++) {
                 reparticion[i] = serverAct;
                 activityServer[serverAct] += (int) users[i].getActivity();
-                List<Double> aux = servers[counter].getLocation();
+                List<Double> aux = servers[serverAct].getLocation();
                 sumDistancia += Haversine.distance(users[i].getLatitude(),users[i].getLongitude(),aux.get(0),aux.get(1));
                 counter += users[i].getActivity();
                 if (counter >= media){
                     serverAct++;
                     counter = 0;
                 }
+                if (serverAct > servers.length-1){
+                    serverAct = 0;
+                }
         }
-        printArray(activityServer);
+        //printArray(activityServer);
         int minor = 99999 ,mayor =0;
         for (int i = 0; i <activityServer.length ; i++) {
             if (activityServer[i] > mayor){
