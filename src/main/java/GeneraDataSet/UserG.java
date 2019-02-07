@@ -1,4 +1,4 @@
-package GeneraDataSheet;
+package GeneraDataSet;
 
 import Json.Connection;
 import Json.Post;

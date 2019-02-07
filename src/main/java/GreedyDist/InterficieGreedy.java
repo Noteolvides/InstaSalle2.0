@@ -1,6 +1,4 @@
-package Greedy;
-
-import java.util.ArrayList;
+package GreedyDist;
 
 public interface InterficieGreedy {
     boolean candidatesToCheck(int i);

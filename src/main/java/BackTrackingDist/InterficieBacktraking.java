@@ -1,4 +1,4 @@
-package BackTracking;
+package BackTrackingDist;
 
 public interface InterficieBacktraking {
     boolean bt(int i,int sum);

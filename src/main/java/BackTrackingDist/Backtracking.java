@@ -1,4 +1,4 @@
-package BackTracking;
+package BackTrackingDist;
 
 public class Backtracking {
      public static void backTracking(int i, int sum, InterficieBacktraking operation){

@@ -1,4 +1,4 @@
-package Greedy;
+package GreedyDist;
 
 import Json.ConnectsTo;
 import Json.Nodes;
@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class GreedyDist implements InterficieGreedy {
     private Nodes[] nodes;
