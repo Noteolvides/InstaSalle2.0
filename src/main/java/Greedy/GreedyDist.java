@@ -22,21 +22,19 @@ public class GreedyDist implements InterficieGreedy {
     }
 
     public boolean candidatesToCheck(int i) {
-        return i <= 2;
+        return winPath.get(winPath.size()-1) == to;
     }
 
     public int select(int i) {
-        List<ConnectsTo> candidates = nodes[i].getConnectsTo();
         ConnectsTo best_candidate = new ConnectsTo();
         best_candidate.setCost(999999);
-        for (int j = 0; j < candidates.size(); j++) {
-            this.sum += candidates.get(j).getCost();
-            if (this.sum <= best_candidate.getCost()) {
-                best_candidate = candidates.get(j);
-            }else{
-                this.sum -= candidates.get(j).getCost();
+        for (int j = 0; j < nodes[i].getConnectsTo().size(); j++) {
+            //mirar if selected
+            if (nodes[i].getConnectsTo().get(j).getCost() <= best_candidate.getCost()) {
+                best_candidate = nodes[i].getConnectsTo().get(j);
             }
         }
+        this.sum += best_candidate.getCost();
         return best_candidate.getTo();
     }
 
@@ -44,8 +42,21 @@ public class GreedyDist implements InterficieGreedy {
         return true;
     }
 
-    public void addCandidate(int candidate) {
+    public int addCandidate(int candidate) {
+        int lvl = 0;
         winPath.add(candidate);
+        for (int j = 0; j < nodes.length; j++){
+            if (nodes[j].getId() == candidate){
+                lvl = j;
+            }
+            nodes[lvl].setSelected();
+            /*for(int x = 0; x < nodes[j].getConnectsTo().size(); x++) {
+                if (nodes[j].getConnectsTo(x).getTo() == candidate){
+                    nodes[nodes[j].getConnectsTo(x).getTo()].setSelected();
+                }
+            }*/
+        }
+        return lvl;
     }
 
     public boolean is_solution(int i) {
