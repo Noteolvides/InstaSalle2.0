@@ -27,14 +27,14 @@ public class BackDistFiabilidad {
         int from = 1;
         int to = 4;
         BackDistFiabilidad bd = new BackDistFiabilidad(nodes,from,to);
-        Backtracking.backTracking(from-1,0,bd);
+        BacktrackingFiable.backTracking(from-1,nodes[from-1].getReliability().floatValue(),bd);
         System.out.println(bd.getBest());
         System.out.println(bd.winPath);
     }
     private Nodes[] nodes;
     private int from;
     private int to;
-    private int best = 999999;
+    private float best = 0;
     public ArrayList<Integer> pathTemp = new ArrayList<Integer>();
     public ArrayList winPath;
     public BackDistFiabilidad(Nodes[] nodes, int from, int to) {
@@ -46,11 +46,11 @@ public class BackDistFiabilidad {
     }
 
 
-    public boolean bt(int i,int sum) {
+    public boolean bt(int i,float sum) {
         return nodes[i].getId() == to;
     }
 
-    public void handleSolution(int i,int best) {
+    public void handleSolution(int i,float best) {
         nodes[i].setSelected();
         winPath = (ArrayList)pathTemp.clone();
         this.best = best;
@@ -60,8 +60,8 @@ public class BackDistFiabilidad {
         return nodes[i].getLenghtOfConexions();
     }
 
-    public boolean promising(int sum,int i, int x) {
-        return sum + nodes[i].getConnectsTo(x).getCost() < best && nodes[nodes[i].getConnectsTo(x).getTo() - 1].getSelected() != 1;
+    public boolean promising(float sum, int i, int x) {
+        return sum * nodes[nodes[i].getConnectsTo(x).getTo() - 1].getReliability().floatValue() > best && nodes[nodes[i].getConnectsTo(x).getTo() - 1].getSelected() != 1;
     }
 
     public void set(int i,int x) {
@@ -78,12 +78,11 @@ public class BackDistFiabilidad {
         return nodes[i].getConnectsTo(x).getTo() - 1;
     }
 
-    public int agregation(int i,int x) {
-        int cost =  nodes[i].getConnectsTo(x).getCost();
-        return cost;
+    public float agregation(int i,int x) {
+        return nodes[nodes[i].getConnectsTo(x).getTo() - 1].getReliability().floatValue();
     }
 
-    public int getBest() {
+    public float getBest() {
         return best;
     }
 }

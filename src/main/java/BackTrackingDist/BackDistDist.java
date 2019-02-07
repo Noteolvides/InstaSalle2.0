@@ -27,7 +27,7 @@ public class BackDistDist {
         int from = 1;
         int to = 4;
         BackDistDist bd = new BackDistDist(nodes,from,to);
-        Backtracking.backTracking(from-1,0,bd);
+        BacktrackingDist.backTracking(from-1,0,bd);
         System.out.println(bd.getBest());
         System.out.println(bd.winPath);
     }
