@@ -1,17 +1,11 @@
-package Json;
+package GeneraDataSheet;
+
+import Json.Connection;
+import Json.Post;
 
 import java.util.List;
 
-public class User {
-    private int id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+public class UserG {
 
     private String username;
 
@@ -24,41 +18,6 @@ public class User {
     private List<Connection> connections = null;
 
     private List<Post> posts = null;
-
-    private double distance;
-
-    private double latitude;
-    private double longitude;
-
-    public double getLatitude() {
-        return latitude;
-    }
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public int getSelected() {
-        return selected;
-    }
-
-    private int selected = 1;
-
-    public void setSelected(){
-        selected = 1;
-    }
-
-    public void clearSelected() {
-        selected = 0;
-    }
-
-    public double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-
 
     public String getUsername() {
         return username;
@@ -108,9 +67,4 @@ public class User {
         this.posts = posts;
     }
 
-    public void setUbication() {
-        List<Double> aux = this.posts.get(this.posts.size()-1).getLocation();
-        latitude = aux.get(0);
-        longitude = aux.get(1);
-    }
 }

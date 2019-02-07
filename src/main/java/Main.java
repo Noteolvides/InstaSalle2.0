@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import BackTracking.*;
 import Greedy.*;
+=======
+import BackTracking.BackDist;
+import BackTracking.Backtracking;
+>>>>>>> Prueba_Gus
 import Json.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,10 +13,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class Main {
+<<<<<<< HEAD
     public static void main(String[] args) throws FileNotFoundException {
         Gson gson = new GsonBuilder().create();
         User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
@@ -71,6 +75,9 @@ public class Main {
             }
             System.out.println("Cuantos Quedan " + usersList.size() +"\n");
         }*/
+=======
+
+>>>>>>> Prueba_Gus
     }
         /*
         //Distribucion carga
@@ -85,4 +92,4 @@ public class Main {
         //greedy -> ordenando por las conexiones mas rapidas y las mas fiables
         */
 
-}
+

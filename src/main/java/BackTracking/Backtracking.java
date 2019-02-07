@@ -1,7 +1,5 @@
 package BackTracking;
 
-import BackTracking.InterficieBacktraking;
-
 public class Backtracking {
      public static void backTracking(int i, int sum, InterficieBacktraking operation){
         if (operation.bt(i,sum)){
