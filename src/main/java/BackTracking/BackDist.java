@@ -37,21 +37,21 @@ public class BackDist implements InterficieBacktraking {
     }
 
     public boolean promising(int sum,int i, int x) {
-        return sum + nodes[i].getConnectsTo(x).getCost() < best && nodes[nodes[i].getConnectsTo(x).getTo()].getSelected() != 1;
+        return sum + nodes[i].getConnectsTo(x).getCost() < best && nodes[nodes[i].getConnectsTo(x).getTo() - 1].getSelected() != 1;
     }
 
     public void set(int i,int x) {
-        nodes[nodes[i].getConnectsTo(x).getTo()].setSelected();
-        pathTemp.add(nodes[i].getConnectsTo(x).getTo() + 1);
+        nodes[nodes[i].getConnectsTo(x).getTo() - 1].setSelected();
+        pathTemp.add(nodes[i].getConnectsTo(x).getTo());
     }
 
     public void unSet(int i,int x) {
-        nodes[nodes[i].getConnectsTo(x).getTo()].clearSelected();
+        nodes[nodes[i].getConnectsTo(x).getTo() - 1].clearSelected();
         pathTemp.remove(pathTemp.size()-1);
     }
 
     public int next(int i,int x) {
-        return nodes[i].getConnectsTo(x).getTo();
+        return nodes[i].getConnectsTo(x).getTo() - 1;
     }
 
     public int agregation(int i,int x) {

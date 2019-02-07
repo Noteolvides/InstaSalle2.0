@@ -30,7 +30,7 @@ public class GreedyDist implements InterficieGreedy {
         best_candidate.setCost(999999);
         for (int j = 0; j < nodes[i].getConnectsTo().size(); j++) {
             //mirar if selected
-            if (nodes[i].getConnectsTo().get(j).getCost() <= best_candidate.getCost()) {
+            if (nodes[i].getConnectsTo().get(j).getCost() <= best_candidate.getCost() && nodes[nodes[i].getConnectsTo().get(j).getTo()-1].getSelected() != 1) {
                 best_candidate = nodes[i].getConnectsTo().get(j);
             }
         }
@@ -43,20 +43,9 @@ public class GreedyDist implements InterficieGreedy {
     }
 
     public int addCandidate(int candidate) {
-        int lvl = 0;
         winPath.add(candidate);
-        for (int j = 0; j < nodes.length; j++){
-            if (nodes[j].getId() == candidate){
-                lvl = j;
-            }
-            nodes[lvl].setSelected();
-            /*for(int x = 0; x < nodes[j].getConnectsTo().size(); x++) {
-                if (nodes[j].getConnectsTo(x).getTo() == candidate){
-                    nodes[nodes[j].getConnectsTo(x).getTo()].setSelected();
-                }
-            }*/
-        }
-        return lvl;
+        nodes[candidate-1].setSelected();
+        return candidate - 1;
     }
 
     public boolean is_solution(int i) {
