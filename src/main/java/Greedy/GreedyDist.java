@@ -2,8 +2,15 @@ package Greedy;
 
 import Json.ConnectsTo;
 import Json.Nodes;
+import Json.Server;
+import Json.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GreedyDist implements InterficieGreedy {
@@ -19,6 +26,24 @@ public class GreedyDist implements InterficieGreedy {
         this.to = to;
         nodes[from-1].setSelected();
         winPath.add(from);
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Gson gson = new GsonBuilder().create();
+        User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
+        Nodes[] nodes = gson.fromJson(new FileReader("Datasets/datasets++/nodes_plus.json"), Nodes[].class);
+        Server[] servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
+        for (int c = 0; c < users.length; c++) {
+            users[c].setId(c);
+        }
+        ArrayList<User> usersList= new ArrayList<User>(Arrays.asList(users));
+
+        int from = 1;
+        int to = 9;
+        GreedyDist gd = new GreedyDist(nodes,from,to);
+        Greedy.greedy(from -1, to, gd);
+        System.out.println(gd.getBest());
+        System.out.println(gd.winPath);
     }
 
     public boolean candidatesToCheck(int i) {
