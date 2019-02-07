@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class BackDist implements InterficieBacktraking {
+public class BackDistDist implements InterficieBacktraking {
     public static void main(String[] args) throws FileNotFoundException {
         Gson gson = new GsonBuilder().create();
         User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
@@ -26,7 +26,7 @@ public class BackDist implements InterficieBacktraking {
         ArrayList<User> usersList= new ArrayList<User>(Arrays.asList(users));
         int from = 1;
         int to = 4;
-        BackDist bd = new BackDist(nodes,from,to);
+        BackDistDist bd = new BackDistDist(nodes,from,to);
         Backtracking.backTracking(from-1,0,bd);
         System.out.println(bd.getBest());
         System.out.println(bd.winPath);
@@ -37,7 +37,7 @@ public class BackDist implements InterficieBacktraking {
     private int best = 999999;
     public ArrayList<Integer> pathTemp = new ArrayList<Integer>();
     public ArrayList winPath;
-    public BackDist(Nodes[] nodes, int from, int to) {
+    public BackDistDist(Nodes[] nodes, int from, int to) {
         this.nodes = nodes;
         this.from = from;
         this.to = to;
