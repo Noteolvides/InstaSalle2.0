@@ -30,7 +30,7 @@ public class GreedyDist implements InterficieGreedy {
     public static void main(String[] args) throws FileNotFoundException {
         Gson gson = new GsonBuilder().create();
         User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
-        Nodes[] nodes = gson.fromJson(new FileReader("Datasets/datasets++/nodes_plus.json"), Nodes[].class);
+        Nodes[] nodes = gson.fromJson(new FileReader("Datasets/nodes.json"), Nodes[].class);
         Server[] servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
         for (int c = 0; c < users.length; c++) {
             users[c].setId(c);
@@ -38,7 +38,7 @@ public class GreedyDist implements InterficieGreedy {
         ArrayList<User> usersList= new ArrayList<User>(Arrays.asList(users));
 
         int from = 1;
-        int to = 9;
+        int to = 4;
         GreedyDist gd = new GreedyDist(nodes,from,to);
         Greedy.greedy(from -1, to, gd);
         System.out.println(gd.getBest());

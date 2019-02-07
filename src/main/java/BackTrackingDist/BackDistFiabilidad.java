@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class BackDistFiabilidad implements InterficieBacktraking {
+public class BackDistFiabilidad {
     public static void main(String[] args) throws FileNotFoundException {
         Gson gson = new GsonBuilder().create();
         User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);

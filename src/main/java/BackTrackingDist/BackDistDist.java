@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class BackDistDist implements InterficieBacktraking {
+public class BackDistDist {
     public static void main(String[] args) throws FileNotFoundException {
         Gson gson = new GsonBuilder().create();
         User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
-        Nodes[] nodes = gson.fromJson(new FileReader("Datasets/nodes.json"), Nodes[].class);
+        Nodes[] nodes = gson.fromJson(new FileReader("Datasets/datasets++/nodes_plus.json"), Nodes[].class);
         Server[] servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
         for (int c = 0; c < users.length; c++) {
             users[c].setId(c);
