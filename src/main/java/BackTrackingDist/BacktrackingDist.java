@@ -1,7 +1,7 @@
 package BackTrackingDist;
 
 public class BacktrackingDist {
-     public static void backTracking(int i, int sum, BackDistDist operation){
+     public static void backTracking(int i, int sum, BackDist operation){
         if (operation.bt(i,sum)){
             operation.handleSolution(i,sum);
         }else{
