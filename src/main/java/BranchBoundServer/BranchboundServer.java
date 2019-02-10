@@ -1,11 +1,41 @@
 package BranchBoundServer;
 
+import Json.ConnectsTo;
+import Json.Nodes;
 import Json.Server;
 import Json.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.PriorityQueue;
 
 public class BranchboundServer {
-    public static void main(String[] args) {
 
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Gson gson = new GsonBuilder().create();
+        User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
+        Nodes[] nodes = gson.fromJson(new FileReader("Datasets/nodes.json"), Nodes[].class);
+        Server[] servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
+        for (int c = 0; c < users.length; c++) {
+            users[c].setId(c);
+            users[c].setUbication();
+        }
+        BranchboundServer sd = new BranchboundServer(users,servers);
+        sd.printArray(sd.wins);
+        System.out.println("La distancia minima es : " + sd.minimaDistancia);
+        System.out.println("La Actividad minima es : " + sd.minimaActividad);
+    }
+
+    private void printArray(int[] x) {
+        for (int i = 0; i < x.length; i++) {
+            System.out.println(x[i]);
+        }
+        System.out.println();
     }
 
     private User[] usuarios;
@@ -26,19 +56,46 @@ public class BranchboundServer {
         actividadActualServidores = new int[servidores.length];
     }
 
-    public void branchboundServer(){
-        while (not_live_nodes()){
-            x = dequeue(live_nodes);
-            option = expand(x);
-            for (int i = 0; i < /*options*/; i++){
-                if (is_solution(option)){
-                    best = min/max(option, best);
+    private class Solution implements Cloneable{
+
+    }
+
+    public void Branchbound(){
+        Solution x = new Solution();
+        Solution best = new Solution();
+        PriorityQueue<Solution> live_nodes = new PriorityQueue<Solution>();
+        ArrayList<Solution> options;
+
+
+        while (/*not_live_nodes()*/){
+            x = live_nodes.poll();
+            options = expand(x);
+            for (int i = 0; i < options.size(); i++){
+                if (is_solution(options.get(i))){
+                    best = minmax(options.get(i), best);
                 }else {
-                    if (is_promising(option, best)){
-                        enqueue (live_nodes, option);
+                    if (is_promising(options.get(i), best)){
+                        live_nodes.add(options.get(i));
                     }
                 }
             }
         }
+    }
+
+    private ArrayList<Solution> expand (Solution x){
+        ArrayList<Solution> options = new ArrayList<Solution>();
+
+    }
+
+    private boolean is_solution(Solution option){
+
+    }
+
+    private Solution minmax(Solution option, Solution best){
+
+    }
+
+    private boolean is_promising(Solution option, Solution best){
+
     }
 }
