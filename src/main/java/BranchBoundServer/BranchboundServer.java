@@ -41,44 +41,43 @@ public class BranchboundServer {
 
     private User[] usuarios;
     private Server[] servidores;
-    private int[] reparticion;
-    public int[] wins;
-    public float minimaActividad = 9999999;
-    public double minimaDistancia = 9999999;
-    private double distanciaActual = 0;
     private int[] actividadActualServidores;
     private int puntero = 0;
 
     private class Solution implements Cloneable{
+        public int[] carrega = new int[usuarios.length];
+        public float minActivitat = 999999;
+        public double minDistancia = 999999;
+        public double actualDistancia = 0;
 
+        public void updateCarrega (int pos, int new_server){
+            this.carrega[pos] = new_server;
+        }
     }
 
     public BranchboundServer(User[] usuarios, Server[] servidores) {//Pasar UsersId Por Orden Mejor pero da igual
         this.usuarios = usuarios;
         this.servidores = servidores;
-        reparticion = new int[usuarios.length];
-        wins = new int[usuarios.length];
         actividadActualServidores = new int[servidores.length];
     }
 
 
 
-    public void Branchbound(){
+    public void Branchbound() {
         Solution x = new Solution();
         Solution best = new Solution();
         PriorityQueue<Solution> live_nodes = new PriorityQueue<Solution>();
         ArrayList<Solution> options;
 
-
-        while (live_nodes.size() != 0){
+        while (live_nodes.size() != 0) {
             x = live_nodes.poll();
-            options = expand(x);
-            for (int i = 0; i < options.size(); i++){
-                if (puntero == usuarios.length){
-                    best = minmax(options.get(i), best);
-                }else {
-                    if (is_promising(options.get(i), best)){
-                        live_nodes.add(options.get(i));
+            for (int i = 0; i < servidores.length; i++) {
+                if (puntero == usuarios.length) {
+                    best = minmax(servidores[i], best);
+                } else {
+                    if (is_promising(servidores[i], best)) {
+                        x.updateCarrega(servidores[i].getId());
+                        live_nodes.add();
                     }
                 }
             }
@@ -90,11 +89,33 @@ public class BranchboundServer {
 
     }
 
-    private Solution minmax(Solution option, Solution best){
-
+    private float getDistanceActivity() {
+        float minor = 99999 ,mayor =0;
+        for (int i = 0; i < actividadActualServidores.length ; i++) {
+            if (actividadActualServidores[i] > mayor){
+                mayor = actividadActualServidores[i];
+            }
+            if (actividadActualServidores[i] < minor && actividadActualServidores[i] != 0){
+                minor = actividadActualServidores[i];
+            }
+            if(actividadActualServidores[i] == 0){
+                return 999999999;
+            }
+        }
+        return Math.abs(mayor - minor);
     }
 
-    private boolean is_promising(Solution option, Solution best){
-        return distanciaActual + Haversine.distance() < minimaActividad;
+    private Solution minmax(Solution option, Solution best){
+        float aux = getDistanceActivity();
+        if (aux < best.minActivitat && best.actualDistancia < best.actualDistancia) {
+            best.minActivitat = aux;
+            best.minDistancia = best.actualDistancia;
+        }
+    }
+
+    private boolean is_promising(int servidor, Solution best){
+        return option.actualDistancia + Haversine.distance(usuarios[puntero].getLatitude(),
+                usuarios[puntero].getLongitude(), servidor.getLocation().get(0),
+                servidor.getLocation().get(1)) < option.minDistancia;
     }
 }
