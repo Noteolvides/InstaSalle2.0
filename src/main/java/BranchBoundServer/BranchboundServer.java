@@ -1,5 +1,6 @@
 package BranchBoundServer;
 
+import BackTrackingServer.Haversine;
 import Json.ConnectsTo;
 import Json.Nodes;
 import Json.Server;
@@ -48,6 +49,10 @@ public class BranchboundServer {
     private int[] actividadActualServidores;
     private int puntero = 0;
 
+    private class Solution implements Cloneable{
+
+    }
+
     public BranchboundServer(User[] usuarios, Server[] servidores) {//Pasar UsersId Por Orden Mejor pero da igual
         this.usuarios = usuarios;
         this.servidores = servidores;
@@ -56,9 +61,7 @@ public class BranchboundServer {
         actividadActualServidores = new int[servidores.length];
     }
 
-    private class Solution implements Cloneable{
 
-    }
 
     public void Branchbound(){
         Solution x = new Solution();
@@ -67,11 +70,11 @@ public class BranchboundServer {
         ArrayList<Solution> options;
 
 
-        while (/*not_live_nodes()*/){
+        while (live_nodes.size() != 0){
             x = live_nodes.poll();
             options = expand(x);
             for (int i = 0; i < options.size(); i++){
-                if (is_solution(options.get(i))){
+                if (puntero == usuarios.length){
                     best = minmax(options.get(i), best);
                 }else {
                     if (is_promising(options.get(i), best)){
@@ -87,15 +90,11 @@ public class BranchboundServer {
 
     }
 
-    private boolean is_solution(Solution option){
-
-    }
-
     private Solution minmax(Solution option, Solution best){
 
     }
 
     private boolean is_promising(Solution option, Solution best){
-
+        return distanciaActual + Haversine.distance() < minimaActividad;
     }
 }

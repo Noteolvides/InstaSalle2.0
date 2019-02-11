@@ -76,7 +76,7 @@ public class ServersDist implements BackTrackingInterN {
 
     private float getDistanceActivity() {
         float minor = 99999 ,mayor =0;
-        for (int i = 0; i <actividadActualServidores.length ; i++) {
+        for (int i = 0; i < actividadActualServidores.length ; i++) {
             if (actividadActualServidores[i] > mayor){
                 mayor = actividadActualServidores[i];
             }
