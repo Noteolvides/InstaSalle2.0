@@ -1,7 +1,6 @@
 package BranchBoundServer;
 
 import BackTrackingServer.Haversine;
-import Json.ConnectsTo;
 import Json.Nodes;
 import Json.Server;
 import Json.User;
@@ -11,7 +10,6 @@ import com.google.gson.GsonBuilder;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.PriorityQueue;
 
 public class BranchboundServer {
@@ -27,9 +25,10 @@ public class BranchboundServer {
             users[c].setUbication();
         }
         BranchboundServer sd = new BranchboundServer(users,servers);
-        sd.printArray(sd.wins);
-        System.out.println("La distancia minima es : " + sd.minimaDistancia);
-        System.out.println("La Actividad minima es : " + sd.minimaActividad);
+        Solution wins = sd.Branchbound();
+        sd.printArray(wins.carrega);
+        System.out.println("La distancia minima es : " + wins.minDistancia);
+        System.out.println("La Actividad minima es : " + wins.minActividad);
     }
 
     private void printArray(int[] x) {
@@ -41,14 +40,14 @@ public class BranchboundServer {
 
     private User[] usuarios;
     private Server[] servidores;
+    private double actualDistancia = 0;
     private int[] actividadActualServidores;
     private int puntero = 0;
 
     private class Solution implements Cloneable{
         public int[] carrega = new int[usuarios.length];
-        public float minActivitat = 999999;
+        public float minActividad = 999999;
         public double minDistancia = 999999;
-        public double actualDistancia = 0;
 
         public void updateCarrega (int pos, int new_server){
             this.carrega[pos] = new_server;
@@ -63,7 +62,7 @@ public class BranchboundServer {
 
 
 
-    public void Branchbound() {
+    public Solution Branchbound() {
         Solution x = new Solution();
         Solution best = new Solution();
         PriorityQueue<Solution> live_nodes = new PriorityQueue<Solution>();
@@ -73,20 +72,16 @@ public class BranchboundServer {
             x = live_nodes.poll();
             for (int i = 0; i < servidores.length; i++) {
                 if (puntero == usuarios.length) {
-                    best = minmax(servidores[i], best);
+                    best = minmax(best);
                 } else {
                     if (is_promising(servidores[i], best)) {
-                        x.updateCarrega(servidores[i].getId());
-                        live_nodes.add();
+                        x.updateCarrega(puntero, Integer.parseInt(servidores[i].getId()));
+                        live_nodes.add(x);
                     }
                 }
             }
         }
-    }
-
-    private ArrayList<Solution> expand (Solution x){
-        ArrayList<Solution> options = new ArrayList<Solution>();
-
+        return best;
     }
 
     private float getDistanceActivity() {
@@ -105,17 +100,18 @@ public class BranchboundServer {
         return Math.abs(mayor - minor);
     }
 
-    private Solution minmax(Solution option, Solution best){
+    private Solution minmax(Solution best){
         float aux = getDistanceActivity();
-        if (aux < best.minActivitat && best.actualDistancia < best.actualDistancia) {
-            best.minActivitat = aux;
-            best.minDistancia = best.actualDistancia;
+        if (aux < best.minActividad && actualDistancia < best.minDistancia) {
+            best.minActividad = aux;
+            best.minDistancia = actualDistancia;
         }
+        return best;
     }
 
-    private boolean is_promising(int servidor, Solution best){
-        return option.actualDistancia + Haversine.distance(usuarios[puntero].getLatitude(),
-                usuarios[puntero].getLongitude(), servidor.getLocation().get(0),
-                servidor.getLocation().get(1)) < option.minDistancia;
+    private boolean is_promising(Server option, Solution best){
+        return  actualDistancia + Haversine.distance(usuarios[puntero].getLatitude(),
+                usuarios[puntero].getLongitude(), option.getLocation().get(0),
+                option.getLocation().get(1)) < best.minDistancia;
     }
 }
