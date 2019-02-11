@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class BranchboundServer {
@@ -65,21 +65,27 @@ public class BranchboundServer {
     public Solution Branchbound() {
         Solution x = new Solution();
         Solution best = new Solution();
-        PriorityQueue<Solution> live_nodes = new PriorityQueue<Solution>();
-        ArrayList<Solution> options;
+        PriorityQueue<Solution> live_nodes = new PriorityQueue<Solution>(usuarios.length, new Comparator<Solution>(){
+            public int compare(Solution o1, Solution o2){
+                Float difAct = o1.minActividad - o2.minActividad;
+                Double difDist = o1.minDistancia - o2.minDistancia;
+                return difAct.intValue()/difDist.intValue();
+            }
+        });
 
         while (live_nodes.size() != 0) {
             x = live_nodes.poll();
-            for (int i = 0; i < servidores.length; i++) {
+            for (Server server : servidores) {
                 if (puntero == usuarios.length) {
                     best = minmax(best);
                 } else {
-                    if (is_promising(servidores[i], best)) {
-                        x.updateCarrega(puntero, Integer.parseInt(servidores[i].getId()));
+                    if (is_promising(server, best)) {
+                        x.updateCarrega(puntero, Integer.parseInt(server.getId()));
                         live_nodes.add(x);
                     }
                 }
             }
+            puntero++;
         }
         return best;
     }
