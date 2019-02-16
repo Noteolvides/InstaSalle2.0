@@ -28,7 +28,7 @@ public class BranchboundServer {
         Solution wins = sd.Branchbound();
         sd.printArray(wins.users);
         System.out.println("La distancia minima es : " + wins.costDist);
-        System.out.println("La Actividad minima es : " + wins.costAct);
+        System.out.println("La Actividad minima es : " + wins.actividadServidores[0]);
     }
 
     private void printArray(Server[] x) {
@@ -67,9 +67,9 @@ public class BranchboundServer {
         Solution best = new Solution();
         PriorityQueue<Solution> live_nodes = new PriorityQueue<Solution>(usuarios.length, new Comparator<Solution>(){
             public int compare(Solution o1, Solution o2){
-                Float difAct = o1.costAct - o2.costAct;
+                //Float difAct = o1.costAct - o2.costAct;
                 Double difDist = o1.costDist - o2.costDist;
-                return difAct.intValue()/difDist.intValue();
+                return /*difAct.intValue()/*/difDist.intValue();
             }
         });
 
@@ -101,16 +101,16 @@ public class BranchboundServer {
         return best;
     }
 
-    private float getDistanceActivity() {
+    private float getDistanceActivity(Solution x) {
         float minor = 99999 ,mayor =0;
-        for (int i = 0; i < actividadActualServidores.length ; i++) {
-            if (actividadActualServidores[i] > mayor){
-                mayor = actividadActualServidores[i];
+        for (float actividad: x.actividadServidores) {
+            if (actividad > mayor){
+                mayor = actividad;
             }
-            if (actividadActualServidores[i] < minor && actividadActualServidores[i] != 0){
-                minor = actividadActualServidores[i];
+            if (actividad < minor && actividad != 0){
+                minor = actividad;
             }
-            if(actividadActualServidores[i] == 0){
+            if(actividad == 0){
                 return 99999;
             }
         }
@@ -118,8 +118,8 @@ public class BranchboundServer {
     }
 
     private Solution min(Solution x,Solution best){
-        float aux = getDistanceActivity();
-        if (aux < best.costAct && actualDistancia < best.costDist) {
+        float aux = getDistanceActivity(x);
+        if (/*aux < best.costAct &&*/ actualDistancia < best.costDist) {
             best = x;
         }
         return best;
