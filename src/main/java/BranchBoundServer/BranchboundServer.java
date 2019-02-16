@@ -41,12 +41,11 @@ public class BranchboundServer {
     private User[] usuarios;
     private Server[] servidores;
     private double actualDistancia = 0;
-    private int[] actividadActualServidores;
     private int puntero = 0;
 
     private class Solution implements Cloneable{
         public Server[] users = new Server[usuarios.length];
-        public float costAct;
+        public float[] actividadServidores = new float[servidores.length];
         public double costDist;
         public int level;
         public int last;
@@ -59,7 +58,6 @@ public class BranchboundServer {
     public BranchboundServer(User[] usuarios, Server[] servidores) {//Pasar UsersId Por Orden Mejor pero da igual
         this.usuarios = usuarios;
         this.servidores = servidores;
-        actividadActualServidores = new int[servidores.length];
     }
 
 
@@ -76,7 +74,6 @@ public class BranchboundServer {
         });
 
         best.costDist = 999999;
-        best.costAct = 999999;
 
         x.level = 0;
         x.last = 0;
@@ -91,6 +88,10 @@ public class BranchboundServer {
                 } else {
                     if (is_promising(x.level, server, best)) {
                         x.updateCarrega(server);
+                        x.costDist += Haversine.distance(usuarios[x.level].getLatitude(),
+                                usuarios[x.level].getLongitude(), server.getLocation().get(0),
+                                server.getLocation().get(1));
+                        x.actividadServidores[Integer.valueOf(server.getId()) - 1] += usuarios[x.level].getActivity(); //revisar els cost de la activitat
                         live_nodes.add(x);
                     }
                 }
