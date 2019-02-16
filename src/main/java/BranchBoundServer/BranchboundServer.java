@@ -26,14 +26,14 @@ public class BranchboundServer {
         }
         BranchboundServer sd = new BranchboundServer(users,servers);
         Solution wins = sd.Branchbound();
-        sd.printArray(wins.carrega);
-        System.out.println("La distancia minima es : " + wins.minDistancia);
-        System.out.println("La Actividad minima es : " + wins.minActividad);
+        sd.printArray(wins.users);
+        System.out.println("La distancia minima es : " + wins.costDist);
+        System.out.println("La Actividad minima es : " + wins.costAct);
     }
 
-    private void printArray(int[] x) {
+    private void printArray(Server[] x) {
         for (int i = 0; i < x.length; i++) {
-            System.out.println(x[i]);
+            System.out.println(x[i].getId());
         }
         System.out.println();
     }
@@ -45,12 +45,14 @@ public class BranchboundServer {
     private int puntero = 0;
 
     private class Solution implements Cloneable{
-        public int[] carrega = new int[usuarios.length];
-        public float minActividad = 999999;
-        public double minDistancia = 999999;
+        public Server[] users = new Server[usuarios.length];
+        public float costAct;
+        public double costDist;
+        public int level;
+        public int last;
 
-        public void updateCarrega (int pos, int new_server){
-            this.carrega[pos] = new_server;
+        public void updateCarrega (int pos, Server new_server){
+            this.users[pos] = new_server;
         }
     }
 
@@ -67,8 +69,8 @@ public class BranchboundServer {
         Solution best = new Solution();
         PriorityQueue<Solution> live_nodes = new PriorityQueue<Solution>(usuarios.length, new Comparator<Solution>(){
             public int compare(Solution o1, Solution o2){
-                Float difAct = o1.minActividad - o2.minActividad;
-                Double difDist = o1.minDistancia - o2.minDistancia;
+                Float difAct = o1.costAct - o2.costAct;
+                Double difDist = o1.costDist - o2.costDist;
                 return difAct.intValue()/difDist.intValue();
             }
         });
@@ -80,7 +82,7 @@ public class BranchboundServer {
                     best = minmax(best);
                 } else {
                     if (is_promising(server, best)) {
-                        x.updateCarrega(puntero, Integer.parseInt(server.getId()));
+                        x.updateCarrega(puntero, server);
                         live_nodes.add(x);
                     }
                 }
@@ -108,9 +110,9 @@ public class BranchboundServer {
 
     private Solution minmax(Solution best){
         float aux = getDistanceActivity();
-        if (aux < best.minActividad && actualDistancia < best.minDistancia) {
-            best.minActividad = aux;
-            best.minDistancia = actualDistancia;
+        if (aux < best.costAct && actualDistancia < best.costDist) {
+            best.costAct = aux;
+            best.costDist = actualDistancia;
         }
         return best;
     }
@@ -118,6 +120,6 @@ public class BranchboundServer {
     private boolean is_promising(Server option, Solution best){
         return  actualDistancia + Haversine.distance(usuarios[puntero].getLatitude(),
                 usuarios[puntero].getLongitude(), option.getLocation().get(0),
-                option.getLocation().get(1)) < best.minDistancia;
+                option.getLocation().get(1)) < best.costDist;
     }
 }
