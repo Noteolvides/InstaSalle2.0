@@ -51,8 +51,8 @@ public class BranchboundServer {
         public int level;
         public int last;
 
-        public void updateCarrega (int pos, Server new_server){
-            this.users[pos] = new_server;
+        public void updateCarrega (Server new_server){
+            this.users[level] = new_server;
         }
     }
 
@@ -75,19 +75,27 @@ public class BranchboundServer {
             }
         });
 
+        best.costDist = 999999;
+        best.costAct = 999999;
+
+        x.level = 0;
+        x.last = 0;
+
+        live_nodes.add(x);
+
         while (live_nodes.size() != 0) {
             x = live_nodes.poll();
             for (Server server : servidores) {
-                if (puntero == usuarios.length) {
-                    best = minmax(best);
+                if (x.level == usuarios.length) {
+                    best = min(x, best);
                 } else {
-                    if (is_promising(server, best)) {
-                        x.updateCarrega(puntero, server);
+                    if (is_promising(x.level, server, best)) {
+                        x.updateCarrega(server);
                         live_nodes.add(x);
                     }
                 }
             }
-            puntero++;
+            x.level++;
         }
         return best;
     }
@@ -102,24 +110,23 @@ public class BranchboundServer {
                 minor = actividadActualServidores[i];
             }
             if(actividadActualServidores[i] == 0){
-                return 999999999;
+                return 99999;
             }
         }
         return Math.abs(mayor - minor);
     }
 
-    private Solution minmax(Solution best){
+    private Solution min(Solution x,Solution best){
         float aux = getDistanceActivity();
         if (aux < best.costAct && actualDistancia < best.costDist) {
-            best.costAct = aux;
-            best.costDist = actualDistancia;
+            best = x;
         }
         return best;
     }
 
-    private boolean is_promising(Server option, Solution best){
-        return  actualDistancia + Haversine.distance(usuarios[puntero].getLatitude(),
-                usuarios[puntero].getLongitude(), option.getLocation().get(0),
+    private boolean is_promising(int level,Server option, Solution best){
+        return  actualDistancia + Haversine.distance(usuarios[level].getLatitude(),
+                usuarios[level].getLongitude(), option.getLocation().get(0),
                 option.getLocation().get(1)) < best.costDist;
     }
 }
