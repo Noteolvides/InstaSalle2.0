@@ -86,7 +86,7 @@ public class BranchboundServer {
                 if (x.level == usuarios.length) {
                     best = min(x, best);
                 } else {
-                    if (is_promising(x.level, server, best)) {
+                    if (is_promising(x, server, best)) {
                         x.updateCarrega(server);
                         x.costDist += Haversine.distance(usuarios[x.level].getLatitude(),
                                 usuarios[x.level].getLongitude(), server.getLocation().get(0),
@@ -125,9 +125,7 @@ public class BranchboundServer {
         return best;
     }
 
-    private boolean is_promising(int level,Server option, Solution best){
-        return  actualDistancia + Haversine.distance(usuarios[level].getLatitude(),
-                usuarios[level].getLongitude(), option.getLocation().get(0),
-                option.getLocation().get(1)) < best.costDist;
+    private boolean is_promising(Solution x,Server option, Solution best){
+        return x.actividadServidores[Integer.valueOf(option.getId()) - 1] < best.actividadServidores[Integer.valueOf(option.getId()) - 1];
     }
 }
