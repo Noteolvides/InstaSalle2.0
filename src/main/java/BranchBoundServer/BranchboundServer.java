@@ -74,6 +74,9 @@ public class BranchboundServer {
         });
 
         best.costDist = 999999;
+        for (int i = 0; i < best.actividadServidores.length; i++){
+            best.actividadServidores[i] = 99999;
+        }
 
         x.level = 0;
         x.last = 0;
