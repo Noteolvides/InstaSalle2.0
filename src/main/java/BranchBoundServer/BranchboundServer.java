@@ -119,7 +119,8 @@ public class BranchboundServer {
 
     private Solution min(Solution x,Solution best){
         float aux = getDistanceActivity(x);
-        if (/*aux < best.costAct &&*/ actualDistancia < best.costDist) {
+        float bestaux = getDistanceActivity(best);
+        if (aux < bestaux && x.costDist < best.costDist) {
             best = x;
         }
         return best;
