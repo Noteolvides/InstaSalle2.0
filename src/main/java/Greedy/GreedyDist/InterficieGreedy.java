@@ -1,4 +1,4 @@
-package GreedyDist;
+package Greedy.GreedyDist;
 
 public interface InterficieGreedy {
     boolean candidatesToCheck(int i);

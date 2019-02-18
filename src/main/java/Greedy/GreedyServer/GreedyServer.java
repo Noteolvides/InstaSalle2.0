@@ -1,8 +1,8 @@
-package GreedyServer;
+package Greedy.GreedyServer;
 
 
 
-import BackTrackingServer.Haversine;
+import BackTracking.BackTrackingServer.Haversine;
 import Json.Nodes;
 import Json.Server;
 import Json.User;

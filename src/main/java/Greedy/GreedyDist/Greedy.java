@@ -1,4 +1,4 @@
-package GreedyDist;
+package Greedy.GreedyDist;
 
 public class Greedy {
     public static void greedy(int i, int to, InterficieGreedy operation) {

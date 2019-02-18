@@ -1,6 +1,6 @@
-package BranchBoundServer;
+package BranchBound.BranchBoundServer;
 
-import BackTrackingServer.Haversine;
+import BackTracking.BackTrackingServer.Haversine;
 import Json.Nodes;
 import Json.Server;
 import Json.User;
@@ -69,13 +69,13 @@ public class BranchboundServer {
             public int compare(Solution o1, Solution o2){
                 //Float difAct = o1.costAct - o2.costAct;
                 Double difDist = o1.costDist - o2.costDist;
-                return /*difAct.intValue()/*/difDist.intValue();
+                return /*difAct.intValue()/*/difDist.intValue(); //media actividad de los servidores?
             }
         });
 
         best.costDist = 999999;
         for (int i = 0; i < best.actividadServidores.length; i++){
-            best.actividadServidores[i] = 99999;
+            best.actividadServidores[i] = 999999;
         }
 
         x.level = 0;
@@ -105,7 +105,7 @@ public class BranchboundServer {
     }
 
     private float getDistanceActivity(Solution x) {
-        float minor = 99999 ,mayor =0;
+        float minor = 999999 ,mayor =0;
         for (float actividad: x.actividadServidores) {
             if (actividad > mayor){
                 mayor = actividad;
@@ -114,7 +114,7 @@ public class BranchboundServer {
                 minor = actividad;
             }
             if(actividad == 0){
-                return 99999;
+                return 999999;
             }
         }
         return Math.abs(mayor - minor);

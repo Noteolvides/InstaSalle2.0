@@ -1,4 +1,4 @@
-package BackTrackingServer;
+package BackTracking.BackTrackingServer;
 
 public interface BackTrackingInterN {
     void handleSolution();

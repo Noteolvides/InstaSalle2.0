@@ -1,4 +1,4 @@
-package BackTrackingServer;
+package BackTracking.BackTrackingServer;
 
 import Json.Nodes;
 import Json.Server;

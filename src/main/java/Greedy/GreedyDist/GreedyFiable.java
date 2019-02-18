@@ -1,6 +1,5 @@
-package GreedyDist;
+package Greedy.GreedyDist;
 
-import Json.ConnectsTo;
 import Json.Nodes;
 import Json.Server;
 import Json.User;
@@ -12,19 +11,20 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class GreedyDist implements InterficieGreedy {
+public class GreedyFiable implements InterficieGreedy {
     private Nodes[] nodes;
     private int from;
     private int to;
     private int best = 999999;
-    private int sum = 0;
+    private float sum = 1;
     public ArrayList<Integer> winPath = new ArrayList<Integer>();
-    public GreedyDist(Nodes[] nodes, int from, int to) {
+    public GreedyFiable(Nodes[] nodes, int from, int to) {
         this.nodes = nodes;
         this.from = from;
         this.to = to;
         nodes[from-1].setSelected();
         winPath.add(from);
+        sum *= nodes[from-1].getReliability();
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -39,7 +39,7 @@ public class GreedyDist implements InterficieGreedy {
 
         int from = 1;
         int to = 4;
-        GreedyDist gd = new GreedyDist(nodes,from,to);
+        GreedyFiable gd = new GreedyFiable(nodes,from,to);
         Greedy.greedy(from -1, to, gd);
         System.out.println(gd.getBest());
         System.out.println(gd.winPath);
@@ -50,16 +50,17 @@ public class GreedyDist implements InterficieGreedy {
     }
 
     public int select(int i) {
-        ConnectsTo best_candidate = new ConnectsTo();
-        best_candidate.setCost(999999);
+        Double fiabilidad = 0.0;
+        int candidate = 0;
         for (int j = 0; j < nodes[i].getConnectsTo().size(); j++) {
-            //mirar if selected
-            if (nodes[i].getConnectsTo().get(j).getCost() <= best_candidate.getCost() && nodes[nodes[i].getConnectsTo().get(j).getTo()-1].getSelected() != 1) {
-                best_candidate = nodes[i].getConnectsTo().get(j);
+            Nodes aux = nodes[nodes[i].getConnectsTo().get(j).getTo()-1];
+            if (aux.getReliability() > fiabilidad  && aux.getSelected() != 1) {
+                fiabilidad = aux.getReliability();
+                candidate = nodes[i].getConnectsTo().get(j).getTo();
             }
         }
-        this.sum += best_candidate.getCost();
-        return best_candidate.getTo();
+        this.sum *= fiabilidad;
+        return candidate;
     }
 
     public boolean is_feasible(int i, int candidate) {
@@ -76,7 +77,7 @@ public class GreedyDist implements InterficieGreedy {
         return winPath.get(winPath.size() - 1) == this.to;
     }
 
-    public int getBest(){
+    public float getBest(){
         return sum;
     }
 }

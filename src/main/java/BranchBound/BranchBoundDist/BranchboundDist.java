@@ -1,4 +1,4 @@
-package BranchBoundDist;
+package BranchBound.BranchBoundDist;
 
 import Json.ConnectsTo;
 import Json.Nodes;
@@ -6,13 +6,12 @@ import Json.Server;
 import Json.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sun.org.apache.xpath.internal.FoundIndex;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
-public class BranchboundFiabilidad {
+public class BranchboundDist {
     public static void main(String[] args) throws FileNotFoundException, CloneNotSupportedException {
         Gson gson = new GsonBuilder().create();
         User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
@@ -25,10 +24,10 @@ public class BranchboundFiabilidad {
 
         int from = 1;
         int to = 4;
-        BranchboundFiabilidad bbd = new BranchboundFiabilidad(nodes,from,to);
+        BranchboundDist bbd = new BranchboundDist(nodes,from,to);
     }
 
-    public BranchboundFiabilidad(Nodes[] nodes, int inicial, int fin) throws CloneNotSupportedException {
+    public BranchboundDist(Nodes[] nodes, int inicial, int fin) throws CloneNotSupportedException {
         this.nodes = nodes;
         this.inicial = inicial-1;
         this.fin = fin;
@@ -45,15 +44,15 @@ public class BranchboundFiabilidad {
         }
 
         public LinkedList<Nodes> track  = new LinkedList<Nodes>();
-        private Double cost = 1.0;
+        private Integer cost = 0;
 
 
-        public Double getCost() {
+        public Integer getCost() {
             return cost;
         }
 
-        public void setCost(Double cost) {
-            this.cost *= cost;
+        public void setCost(Integer cost) {
+            this.cost += cost;
         }
         protected Object clone() throws CloneNotSupportedException{
             return super.clone();
@@ -65,14 +64,13 @@ public class BranchboundFiabilidad {
         Solution best = new Solution();
         PriorityQueue<Solution> lives_nodes = new PriorityQueue<Solution>(nodes.length,new Comparator<Solution>() {
             public int compare(Solution o1, Solution o2) {
-                return (o2.getCost().compareTo(o1.getCost()));
+                return o1.getCost() - o2.getCost();
             }
         });
         ArrayList<Solution> options = new ArrayList<Solution>();
         nodes[inicial].setSelected();
         x.track.add(nodes[inicial]);
-        x.setCost(nodes[inicial].getReliability());
-        best.setCost(0.0);
+        best.setCost(Integer.MAX_VALUE);
         lives_nodes.add(x);
 
         while (lives_nodes.size() != 0){
@@ -83,13 +81,13 @@ public class BranchboundFiabilidad {
                     Solution p = (Solution)x.clone();
                     p.setTrack((LinkedList<Nodes>) x.track.clone());
                     p.track.add(nodes[i.getTo()-1]);
-                    p.setCost(nodes[i.getTo()-1].getReliability());
+                    p.setCost(i.getCost());
                     if (i.getTo() == fin){
-                        if (p.getCost() > best.getCost()){
+                        if (p.getCost() < best.getCost()){
                             best = p;
                         }
                     }else{
-                        if (p.getCost() > best.getCost()){
+                        if (p.getCost() < best.getCost()){
                             nodes[i.getTo()-1].setSelected();
                             lives_nodes.add(p);
                         }

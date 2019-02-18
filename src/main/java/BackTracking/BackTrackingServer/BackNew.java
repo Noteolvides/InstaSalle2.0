@@ -1,4 +1,4 @@
-package BackTrackingServer;
+package BackTracking.BackTrackingServer;
 
 public class BackNew {
     public static void backTracking(BackTrackingInterN solution){

@@ -1,4 +1,4 @@
-package BackTrackingServer;
+package BackTracking.BackTrackingServer;
 
 public class Haversine {
     private static final int EARTH_RADIUS = 6371;
