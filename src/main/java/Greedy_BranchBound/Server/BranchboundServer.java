@@ -1,4 +1,4 @@
-package BranchBound.BranchBoundServer;
+package Greedy_BranchBound.Server;
 
 import BackTracking.BackTrackingServer.Haversine;
 import Json.Nodes;
