@@ -7,6 +7,7 @@ import Json.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import javax.xml.transform.dom.DOMLocator;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Comparator;
@@ -50,7 +51,7 @@ public class BranchboundServer {
         public float[] actividadServidores;
         public double costDist;
         public int level;
-        public float diference = 999999;
+        public double diference = Double.MAX_VALUE;
 
         public Solution(){
             users = new Server[usuarios.length];
@@ -68,11 +69,11 @@ public class BranchboundServer {
             this.users[level] = new_server;
         }
 
-        public void setDiference(float abs) {
+        public void setDiference(Double abs) {
             this.diference = abs;
         }
 
-        public float getDiference() {
+        public Double getDiference() {
             return diference;
         }
     }
@@ -130,7 +131,7 @@ public class BranchboundServer {
         return best;
     }
 
-    private float getDistanceActivity(Solution x) {
+    private Double getDistanceActivity(Solution x) {
         float minor = 99999 ,mayor =0;
         for (float actividad: x.actividadServidores) {
             if (actividad > mayor){
@@ -140,28 +141,28 @@ public class BranchboundServer {
                 minor = actividad;
             }
             if(actividad == 0){
-                x.setDiference(999999);
-                return 999999;
+                x.setDiference(Double.MAX_VALUE);
+                return Double.MAX_VALUE;
             }
         }
-        x.setDiference(Math.abs(mayor - minor));
-        return Math.abs(mayor - minor);
+        x.setDiference((double) Math.abs(mayor - minor));
+        return (Double) (double)Math.abs(mayor - minor);
     }
 
     private Solution min(Solution x,Solution best){
-        float aux = getDistanceActivity(x);
+        Double aux = getDistanceActivity(x);
         x.setDiference(aux);
-        float bestaux = best.getDiference();
-        float xMayor = (float) (aux/x.costDist);
-        float bestMayor = (float) (bestaux/best.costDist);
-        if (aux < bestaux && x.costDist < best.costDist)  {
+        Double bestaux = best.getDiference();
+        Double xMayor = (aux/x.costDist);
+        Double bestMayor =  (bestaux/best.costDist);
+        if (aux <= bestaux && x.costDist < best.costDist && aux != Double.MAX_VALUE)  {
             best = x;
         }
         return best;
     }
 
     private boolean is_promising(Solution x, Solution best){
-        float aux = getDistanceActivity(x);
+        Double aux = getDistanceActivity(x);
         x.setDiference(aux);
         //float aux = getDistanceActivity(x);
         //float bestaux = getDistanceActivity(best);
