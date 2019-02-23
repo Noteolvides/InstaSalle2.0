@@ -3,8 +3,10 @@ package Json;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class Server {
+import javax.xml.transform.dom.DOMLocator;
 
+public class Server {
+    public Double activitie = 0.0;
     private String id;
 
     private String country;
