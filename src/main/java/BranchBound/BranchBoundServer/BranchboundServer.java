@@ -48,17 +48,17 @@ public class BranchboundServer {
     private class Solution{
 
         public Server[] users;
-        public float[] actividadServidores;
+        public double[] actividadServidores;
         public double costDist;
         public int level;
         public double diference = Double.MAX_VALUE;
 
         public Solution(){
             users = new Server[usuarios.length];
-            actividadServidores = new float[servidores.length];
+            actividadServidores = new double[servidores.length];
         }
 
-        public Solution(Server[] users, float[] actividadServidores, double costDist, int level) {
+        public Solution(Server[] users, double[] actividadServidores, double costDist, int level) {
             this.users = users;
             this.actividadServidores = actividadServidores;
             this.costDist = costDist;
@@ -90,7 +90,7 @@ public class BranchboundServer {
         Solution best = new Solution();
         PriorityQueue<Solution> live_nodes = new PriorityQueue<Solution>(usuarios.length, new Comparator<Solution>(){
             public int compare(Solution o1, Solution o2){
-                if(o1.getDiference() > 999 || o2.getDiference() > 999){
+                if(o1.getDiference() > Double.MAX_VALUE || o2.getDiference() > Double.MAX_VALUE){
                     return o2.level - o1.level;
                 }
                 float aux1 = (float) (o1.getDiference()/o1.costDist);
@@ -98,9 +98,9 @@ public class BranchboundServer {
                 return (int) ((aux2 - aux1)*1000000000);
         }});
 
-        best.costDist = 99999;
+        best.costDist = Double.MAX_VALUE;
         for (int i = 0; i < best.actividadServidores.length; i++){
-            best.actividadServidores[i] = 99999;
+            best.actividadServidores[i] = Double.MAX_VALUE;
         }
 
         x.level = 0;
@@ -111,17 +111,17 @@ public class BranchboundServer {
             x = live_nodes.poll();
             for (Server server : servidores) {
                 Server[] aux = x.users.clone();
-                float[] aux2 = x.actividadServidores.clone();
+                double[] aux2 = x.actividadServidores.clone();
                 Solution t  = new Solution(aux,aux2,x.costDist,x.level);
                 if (t.level == usuarios.length) {
                     best = min(t, best);
                 } else {
-                    if (is_promising(t, best)) {
+                    if (is_promising(t, best,server)) {
                         t.updateCarrega(server);
                         t.costDist += Haversine.distance(usuarios[t.level].getLatitude(),
                                 usuarios[t.level].getLongitude(), server.getLocation().get(0),
                                 server.getLocation().get(1));
-                        t.actividadServidores[Integer.valueOf(server.getId()) - 1] += usuarios[t.level].getActivity(); //revisar els cost de la activitat
+                        t.actividadServidores[Integer.parseInt(server.getId()) - 1] += usuarios[t.level].getActivity(); //revisar els cost de la activitat
                         t.level++;
                         live_nodes.add(t);
                     }
@@ -132,8 +132,8 @@ public class BranchboundServer {
     }
 
     private Double getDistanceActivity(Solution x) {
-        float minor = 99999 ,mayor =0;
-        for (float actividad: x.actividadServidores) {
+        Double minor = Double.MAX_VALUE ,mayor = Double.MIN_VALUE;
+        for (Double actividad: x.actividadServidores) {
             if (actividad > mayor){
                 mayor = actividad;
             }
@@ -153,22 +153,20 @@ public class BranchboundServer {
         Double aux = getDistanceActivity(x);
         x.setDiference(aux);
         Double bestaux = best.getDiference();
-        Double xMayor = (aux/x.costDist);
-        Double bestMayor =  (bestaux/best.costDist);
         if (aux <= bestaux && x.costDist < best.costDist && aux != Double.MAX_VALUE)  {
             best = x;
         }
         return best;
     }
 
-    private boolean is_promising(Solution x, Solution best){
-        Double aux = getDistanceActivity(x);
-        x.setDiference(aux);
-        //float aux = getDistanceActivity(x);
-        //float bestaux = getDistanceActivity(best);
-        //if (aux < bestaux && x.costDist < best.costDist)  {
-          //  return true;
-        //}
-        return true;
+    private boolean is_promising(Solution x, Solution best,Server server){
+        Double disx = Haversine.distance(usuarios[x.level].getLatitude(),
+                usuarios[x.level].getLongitude(), server.getLocation().get(0),
+                server.getLocation().get(1)) + x.costDist;
+        if (disx < best.costDist){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
