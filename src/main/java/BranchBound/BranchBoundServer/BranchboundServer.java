@@ -7,6 +7,7 @@ import Json.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import javax.xml.transform.dom.DOMLocator;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Comparator;
@@ -47,17 +48,17 @@ public class BranchboundServer {
     private class Solution{
 
         public Server[] users;
-        public float[] actividadServidores;
+        public double[] actividadServidores;
         public double costDist;
         public int level;
-        public float diference = 999999;
+        public double diference = Double.MAX_VALUE;
 
         public Solution(){
             users = new Server[usuarios.length];
-            actividadServidores = new float[servidores.length];
+            actividadServidores = new double[servidores.length];
         }
 
-        public Solution(Server[] users, float[] actividadServidores, double costDist, int level) {
+        public Solution(Server[] users, double[] actividadServidores, double costDist, int level) {
             this.users = users;
             this.actividadServidores = actividadServidores;
             this.costDist = costDist;
@@ -68,11 +69,11 @@ public class BranchboundServer {
             this.users[level] = new_server;
         }
 
-        public void setDiference(float abs) {
+        public void setDiference(Double abs) {
             this.diference = abs;
         }
 
-        public float getDiference() {
+        public Double getDiference() {
             return diference;
         }
     }
@@ -89,7 +90,7 @@ public class BranchboundServer {
         Solution best = new Solution();
         PriorityQueue<Solution> live_nodes = new PriorityQueue<Solution>(usuarios.length, new Comparator<Solution>(){
             public int compare(Solution o1, Solution o2){
-                if(o1.getDiference() > 999 || o2.getDiference() > 999){
+                if(o1.getDiference() > Double.MAX_VALUE || o2.getDiference() > Double.MAX_VALUE){
                     return o2.level - o1.level;
                 }
                 float aux1 = (float) (o1.getDiference()/o1.costDist);
@@ -97,9 +98,9 @@ public class BranchboundServer {
                 return (int) ((aux2 - aux1)*1000000000);
         }});
 
-        best.costDist = 99999;
+        best.costDist = Double.MAX_VALUE;
         for (int i = 0; i < best.actividadServidores.length; i++){
-            best.actividadServidores[i] = 99999;
+            best.actividadServidores[i] = Double.MAX_VALUE;
         }
 
         x.level = 0;
@@ -110,17 +111,17 @@ public class BranchboundServer {
             x = live_nodes.poll();
             for (Server server : servidores) {
                 Server[] aux = x.users.clone();
-                float[] aux2 = x.actividadServidores.clone();
+                double[] aux2 = x.actividadServidores.clone();
                 Solution t  = new Solution(aux,aux2,x.costDist,x.level);
                 if (t.level == usuarios.length) {
                     best = min(t, best);
                 } else {
-                    if (is_promising(t, best)) {
+                    if (is_promising(t, best,server)) {
                         t.updateCarrega(server);
                         t.costDist += Haversine.distance(usuarios[t.level].getLatitude(),
                                 usuarios[t.level].getLongitude(), server.getLocation().get(0),
                                 server.getLocation().get(1));
-                        t.actividadServidores[Integer.valueOf(server.getId()) - 1] += usuarios[t.level].getActivity(); //revisar els cost de la activitat
+                        t.actividadServidores[Integer.parseInt(server.getId()) - 1] += usuarios[t.level].getActivity(); //revisar els cost de la activitat
                         t.level++;
                         live_nodes.add(t);
                     }
@@ -130,9 +131,9 @@ public class BranchboundServer {
         return best;
     }
 
-    private float getDistanceActivity(Solution x) {
-        float minor = 99999 ,mayor =0;
-        for (float actividad: x.actividadServidores) {
+    private Double getDistanceActivity(Solution x) {
+        Double minor = Double.MAX_VALUE ,mayor = Double.MIN_VALUE;
+        for (Double actividad: x.actividadServidores) {
             if (actividad > mayor){
                 mayor = actividad;
             }
@@ -140,34 +141,32 @@ public class BranchboundServer {
                 minor = actividad;
             }
             if(actividad == 0){
-                x.setDiference(999999);
-                return 999999;
+                x.setDiference(Double.MAX_VALUE);
+                return Double.MAX_VALUE;
             }
         }
-        x.setDiference(Math.abs(mayor - minor));
-        return Math.abs(mayor - minor);
+        x.setDiference((double) Math.abs(mayor - minor));
+        return (Double) (double)Math.abs(mayor - minor);
     }
 
     private Solution min(Solution x,Solution best){
-        float aux = getDistanceActivity(x);
+        Double aux = getDistanceActivity(x);
         x.setDiference(aux);
-        float bestaux = best.getDiference();
-        float xMayor = (float) (aux/x.costDist);
-        float bestMayor = (float) (bestaux/best.costDist);
-        if (aux < bestaux && x.costDist < best.costDist)  {
+        Double bestaux = best.getDiference();
+        if (aux <= bestaux && x.costDist < best.costDist && aux != Double.MAX_VALUE)  {
             best = x;
         }
         return best;
     }
 
-    private boolean is_promising(Solution x, Solution best){
-        float aux = getDistanceActivity(x);
-        x.setDiference(aux);
-        //float aux = getDistanceActivity(x);
-        //float bestaux = getDistanceActivity(best);
-        //if (aux < bestaux && x.costDist < best.costDist)  {
-          //  return true;
-        //}
-        return true;
+    private boolean is_promising(Solution x, Solution best,Server server){
+        Double disx = Haversine.distance(usuarios[x.level].getLatitude(),
+                usuarios[x.level].getLongitude(), server.getLocation().get(0),
+                server.getLocation().get(1)) + x.costDist;
+        if (disx < best.costDist){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
