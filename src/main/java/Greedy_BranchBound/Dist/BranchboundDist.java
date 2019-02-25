@@ -1,5 +1,7 @@
 package Greedy_BranchBound.Dist;
 
+import Greedy.GreedyDist.GreedyDist;
+import Greedy.GreedyServer.GreedyServer;
 import Json.ConnectsTo;
 import Json.Nodes;
 import Json.Server;
@@ -27,11 +29,24 @@ public class BranchboundDist {
         BranchboundDist bbd = new BranchboundDist(nodes,from,to);
     }
 
+
+
     public BranchboundDist(Nodes[] nodes, int inicial, int fin) throws CloneNotSupportedException {
         this.nodes = nodes;
         this.inicial = inicial-1;
         this.fin = fin;
-        BranchBound();
+        GreedyDist greedyDist = new GreedyDist(nodes, inicial, fin);
+        Solution greedy = greedySolution(greedyDist);
+        BranchBound(greedy);
+    }
+
+    private Solution greedySolution(GreedyDist greedy) {
+        Solution greedy_sol = new Solution();
+        greedy_sol.setCost(greedy.getBest());
+        for (Integer pos:greedy.winPath){
+            greedy_sol.track.add(nodes[pos]);
+        }
+        return greedy_sol;
     }
 
     private Nodes[] nodes;
@@ -59,9 +74,9 @@ public class BranchboundDist {
         }
     }
 
-    public void BranchBound() throws CloneNotSupportedException {
+    public void BranchBound(Solution greedy) throws CloneNotSupportedException {
         Solution x = new Solution();
-        Solution best = new Solution();
+        Solution best = greedy;
         PriorityQueue<Solution> lives_nodes = new PriorityQueue<Solution>(nodes.length,new Comparator<Solution>() {
             public int compare(Solution o1, Solution o2) {
                 return o1.getCost() - o2.getCost();

@@ -1,5 +1,6 @@
 package Greedy_BranchBound.Dist;
 
+import Greedy.GreedyDist.GreedyFiable;
 import Json.ConnectsTo;
 import Json.Nodes;
 import Json.Server;
@@ -31,7 +32,18 @@ public class BranchboundFiabilidad {
         this.nodes = nodes;
         this.inicial = inicial-1;
         this.fin = fin;
-        BranchBound();
+        GreedyFiable greedyFiable = new GreedyFiable(nodes, inicial, fin);
+        Solution greedy = greedySolution(greedyFiable);
+        BranchBound(greedy);
+    }
+
+    private Solution greedySolution(GreedyFiable greedy) {
+        Solution greedy_sol = new Solution();
+        greedy_sol.setCost((double)greedy.getBest());
+        for (Integer pos:greedy.winPath){
+            greedy_sol.track.add(nodes[pos]);
+        }
+        return greedy_sol;
     }
 
     private Nodes[] nodes;
@@ -59,9 +71,9 @@ public class BranchboundFiabilidad {
         }
     }
 
-    public void BranchBound() throws CloneNotSupportedException {
+    public void BranchBound(Solution greedy) throws CloneNotSupportedException {
         Solution x = new Solution();
-        Solution best = new Solution();
+        Solution best = greedy;
         PriorityQueue<Solution> lives_nodes = new PriorityQueue<Solution>(nodes.length,new Comparator<Solution>() {
             public int compare(Solution o1, Solution o2) {
                 return (o2.getCost().compareTo(o1.getCost()));
