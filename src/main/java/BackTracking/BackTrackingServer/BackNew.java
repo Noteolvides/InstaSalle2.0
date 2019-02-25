@@ -1,7 +1,7 @@
 package BackTracking.BackTrackingServer;
 
 public class BackNew {
-    public static void backTracking(ServersDist solution){
+    public static void backTracking(BackServer solution){
         if (solution.bt()){
             solution.handleSolution();
         }else{
