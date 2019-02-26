@@ -1,5 +1,7 @@
 package Greedy_BackTracking.Dist;
 
+import Greedy.GreedyDist.GreedyDist;
+import Greedy.GreedyDist.GreedyFiable;
 import Json.Nodes;
 import Json.Server;
 import Json.User;
@@ -43,6 +45,8 @@ public class BackDistFiabilidad {
         this.to = to;
         nodes[from-1].setSelected();
         pathTemp.add(from);
+        GreedyFiable  greedy = new GreedyFiable(nodes, from, to); //no fa el greedy
+        this.best = greedy.getBest();
     }
 
 

@@ -27,7 +27,7 @@ public class BranchboundServer {
         }
         BranchboundServer sd = new BranchboundServer(users,servers);
         Solution wins = sd.Branchbound();
-        System.out.println(wins);
+        //System.out.println(wins);
         //sd.printArray(wins.users);
         System.out.println("La distancia minima es : " + wins.costDist);
         System.out.println("La Actividad minima es : " + wins.actividadServidores[0]);

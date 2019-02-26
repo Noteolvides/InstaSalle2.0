@@ -1,5 +1,6 @@
 package Greedy_BackTracking.Dist;
 
+import Greedy.GreedyDist.GreedyDist;
 import Json.Nodes;
 import Json.Server;
 import Json.User;
@@ -43,6 +44,8 @@ public class BackDist {
         this.to = to;
         nodes[from-1].setSelected();
         pathTemp.add(from);
+        GreedyDist greedy = new GreedyDist(nodes,from,to); //no fa el greedy
+        this.best = greedy.getBest();
     }
 
 
