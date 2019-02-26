@@ -35,7 +35,7 @@ public class BranchboundDist {
         this.nodes = nodes;
         this.inicial = inicial-1;
         this.fin = fin;
-        GreedyDist greedyDist = new GreedyDist(nodes, inicial, fin);
+        GreedyDist greedyDist = new GreedyDist(nodes, inicial, fin); //no fa el greedy
         Solution greedy = greedySolution(greedyDist);
         BranchBound(greedy);
     }

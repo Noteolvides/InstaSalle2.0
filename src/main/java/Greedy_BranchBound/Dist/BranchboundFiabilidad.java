@@ -32,7 +32,7 @@ public class BranchboundFiabilidad {
         this.nodes = nodes;
         this.inicial = inicial-1;
         this.fin = fin;
-        GreedyFiable greedyFiable = new GreedyFiable(nodes, inicial, fin);
+        GreedyFiable greedyFiable = new GreedyFiable(nodes, inicial, fin); //no fa el greedy
         Solution greedy = greedySolution(greedyFiable);
         BranchBound(greedy);
     }
