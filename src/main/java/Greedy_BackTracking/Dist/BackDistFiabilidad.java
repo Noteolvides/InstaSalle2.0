@@ -1,5 +1,6 @@
 package Greedy_BackTracking.Dist;
 
+import Greedy.GreedyDist.Greedy;
 import Greedy.GreedyDist.GreedyDist;
 import Greedy.GreedyDist.GreedyFiable;
 import Json.Nodes;
@@ -28,7 +29,9 @@ public class BackDistFiabilidad {
         ArrayList<User> usersList= new ArrayList<User>(Arrays.asList(users));
         int from = 1;
         int to = 4;
-        BackDistFiabilidad bd = new BackDistFiabilidad(nodes,from,to);
+        GreedyFiable greedy = new GreedyFiable(nodes, from, to);
+        Greedy.greedy(from -1, to, greedy);
+        BackDistFiabilidad bd = new BackDistFiabilidad(nodes,from,to, greedy);
         BacktrackingFiable.backTracking(from-1,nodes[from-1].getReliability().floatValue(),bd);
         System.out.println(bd.getBest());
         System.out.println(bd.winPath);
@@ -39,13 +42,12 @@ public class BackDistFiabilidad {
     private float best = 0;
     public ArrayList<Integer> pathTemp = new ArrayList<Integer>();
     public ArrayList winPath;
-    public BackDistFiabilidad(Nodes[] nodes, int from, int to) {
+    public BackDistFiabilidad(Nodes[] nodes, int from, int to, GreedyFiable greedy) {
         this.nodes = nodes;
         this.from = from;
         this.to = to;
         nodes[from-1].setSelected();
         pathTemp.add(from);
-        GreedyFiable  greedy = new GreedyFiable(nodes, from, to); //no fa el greedy
         this.best = greedy.getBest();
     }
 

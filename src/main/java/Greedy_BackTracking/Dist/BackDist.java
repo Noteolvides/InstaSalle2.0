@@ -1,5 +1,6 @@
 package Greedy_BackTracking.Dist;
 
+import Greedy.GreedyDist.Greedy;
 import Greedy.GreedyDist.GreedyDist;
 import Json.Nodes;
 import Json.Server;
@@ -27,7 +28,9 @@ public class BackDist {
         ArrayList<User> usersList= new ArrayList<User>(Arrays.asList(users));
         int from = 1;
         int to = 4;
-        BackDist bd = new BackDist(nodes,from,to);
+        GreedyDist greedy = new GreedyDist(nodes, from, to);
+        Greedy.greedy(from -1, to, greedy);
+        BackDist bd = new BackDist(nodes,from,to, greedy);
         BacktrackingDist.backTracking(from-1,0,bd);
         System.out.println(bd.getBest());
         System.out.println(bd.winPath);
@@ -38,13 +41,12 @@ public class BackDist {
     private int best = 999999;
     public ArrayList<Integer> pathTemp = new ArrayList<Integer>();
     public ArrayList winPath;
-    public BackDist(Nodes[] nodes, int from, int to) {
+    public BackDist(Nodes[] nodes, int from, int to, GreedyDist greedy) {
         this.nodes = nodes;
         this.from = from;
         this.to = to;
         nodes[from-1].setSelected();
         pathTemp.add(from);
-        GreedyDist greedy = new GreedyDist(nodes,from,to); //no fa el greedy
         this.best = greedy.getBest();
     }
 
