@@ -39,13 +39,13 @@ public class GreedyServer {
         int[] solution = new int[users.length];
         for(int i = 0 ; i < users.length ; i++){
             Double bestDistance = Double.MAX_VALUE;
-            Double bestActivitie = Double.MAX_VALUE;
+            Double bestActivity = Double.MAX_VALUE;
             int bestServer = 0;
             for (Server s : servers){
                 Double distance = Haversine.distance(users[i].getLatitude(),users[i].getLongitude(),s.getLocation().get(0),s.getLocation().get(1));
-                if (s.activity < bestActivitie && distance < bestDistance){
+                if (s.activity < bestActivity && distance < bestDistance){
                     bestServer = Integer.parseInt(s.getId());
-                    bestActivitie = s.activity;
+                    bestActivity = s.activity;
                     bestDistance = distance;
                 }
             }

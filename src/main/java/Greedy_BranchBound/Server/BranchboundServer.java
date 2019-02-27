@@ -26,9 +26,10 @@ public class BranchboundServer {
         }
         BranchboundServer sd = new BranchboundServer(users,servers);
         Solution wins = sd.Branchbound();
-        sd.printArray(wins.users);
+        //System.out.println(wins);
+        //sd.printArray(wins.users);
         System.out.println("La distancia minima es : " + wins.costDist);
-        System.out.println("La Actividad minima es : " + wins.actividadServidores[0]);
+        System.out.println("La Actividad minima es : " + wins.diference);
     }
 
     private void printArray(Server[] x) {
@@ -43,15 +44,36 @@ public class BranchboundServer {
     private double actualDistancia = 0;
     private int puntero = 0;
 
-    private class Solution implements Cloneable{
-        public Server[] users = new Server[usuarios.length];
-        public float[] actividadServidores = new float[servidores.length];
+    private class Solution{
+
+        public Server[] users;
+        public double[] actividadServidores;
         public double costDist;
         public int level;
-        public int last;
+        public double diference = Double.MAX_VALUE;
+
+        public Solution(){
+            users = new Server[usuarios.length];
+            actividadServidores = new double[servidores.length];
+        }
+
+        public Solution(Server[] users, double[] actividadServidores, double costDist, int level) {
+            this.users = users;
+            this.actividadServidores = actividadServidores;
+            this.costDist = costDist;
+            this.level = level;
+        }
 
         public void updateCarrega (Server new_server){
             this.users[level] = new_server;
+        }
+
+        public void setDiference(Double abs) {
+            this.diference = abs;
+        }
+
+        public Double getDiference() {
+            return diference;
         }
     }
 
@@ -67,46 +89,50 @@ public class BranchboundServer {
         Solution best = new Solution();
         PriorityQueue<Solution> live_nodes = new PriorityQueue<Solution>(usuarios.length, new Comparator<Solution>(){
             public int compare(Solution o1, Solution o2){
-                //Float difAct = o1.costAct - o2.costAct;
-                Double difDist = o1.costDist - o2.costDist;
-                return /*difAct.intValue()/*/difDist.intValue(); //media actividad de los servidores?
-            }
-        });
+                if(o1.getDiference() > Double.MAX_VALUE || o2.getDiference() > Double.MAX_VALUE){
+                    return o2.level - o1.level;
+                }
+                float aux1 = (float) (o1.getDiference()/o1.costDist);
+                float aux2 = (float) (o2.getDiference()/o2.costDist);
+                return (int) ((aux2 - aux1)*1000000000);
+        }});
 
-        best.costDist = 99999;
+        best.costDist = Double.MAX_VALUE;
         for (int i = 0; i < best.actividadServidores.length; i++){
-            best.actividadServidores[i] = 99999;
+            best.actividadServidores[i] = Double.MAX_VALUE;
         }
 
         x.level = 0;
-        x.last = 0;
 
         live_nodes.add(x);
 
         while (live_nodes.size() != 0) {
             x = live_nodes.poll();
             for (Server server : servidores) {
-                if (x.level == usuarios.length) {
-                    best = min(x, best);
+                Server[] aux = x.users.clone();
+                double[] aux2 = x.actividadServidores.clone();
+                Solution t  = new Solution(aux,aux2,x.costDist,x.level);
+                if (t.level == usuarios.length) {
+                    best = min(t, best);
                 } else {
-                    if (is_promising(x, server, best)) {
-                        x.updateCarrega(server);
-                        x.costDist += Haversine.distance(usuarios[x.level].getLatitude(),
-                                usuarios[x.level].getLongitude(), server.getLocation().get(0),
+                    if (is_promising(t, best,server)) {
+                        t.updateCarrega(server);
+                        t.costDist += Haversine.distance(usuarios[t.level].getLatitude(),
+                                usuarios[t.level].getLongitude(), server.getLocation().get(0),
                                 server.getLocation().get(1));
-                        x.actividadServidores[Integer.valueOf(server.getId()) - 1] += usuarios[x.level].getActivity(); //revisar els cost de la activitat
-                        live_nodes.add(x);
+                        t.actividadServidores[Integer.parseInt(server.getId()) - 1] += usuarios[t.level].getActivity(); //revisar els cost de la activitat
+                        t.level++;
+                        live_nodes.add(t);
                     }
                 }
             }
-            x.level++;
         }
         return best;
     }
 
-    private float getDistanceActivity(Solution x) {
-        float minor = 99999 ,mayor =0;
-        for (float actividad: x.actividadServidores) {
+    private Double getDistanceActivity(Solution x) {
+        Double minor = Double.MAX_VALUE ,mayor = Double.MIN_VALUE;
+        for (Double actividad: x.actividadServidores) {
             if (actividad > mayor){
                 mayor = actividad;
             }
@@ -114,22 +140,32 @@ public class BranchboundServer {
                 minor = actividad;
             }
             if(actividad == 0){
-                return 999999;
+                x.setDiference(Double.MAX_VALUE);
+                return Double.MAX_VALUE;
             }
         }
-        return Math.abs(mayor - minor);
+        x.setDiference((double) Math.abs(mayor - minor));
+        return (Double) (double)Math.abs(mayor - minor);
     }
 
     private Solution min(Solution x,Solution best){
-        float aux = getDistanceActivity(x);
-        float bestaux = getDistanceActivity(best);
-        if (aux < bestaux && x.costDist < best.costDist) {
+        Double aux = getDistanceActivity(x);
+        x.setDiference(aux);
+        Double bestaux = best.getDiference();
+        if (aux <= bestaux && x.costDist < best.costDist && aux != Double.MAX_VALUE)  {
             best = x;
         }
         return best;
     }
 
-    private boolean is_promising(Solution x,Server option, Solution best){
-        return x.actividadServidores[Integer.valueOf(option.getId()) - 1] < best.actividadServidores[Integer.valueOf(option.getId()) - 1];
+    private boolean is_promising(Solution x, Solution best,Server server){
+        Double disx = Haversine.distance(usuarios[x.level].getLatitude(),
+                usuarios[x.level].getLongitude(), server.getLocation().get(0),
+                server.getLocation().get(1)) + x.costDist;
+        if (disx < best.costDist){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

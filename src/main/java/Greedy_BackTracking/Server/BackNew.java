@@ -1,7 +1,7 @@
 package Greedy_BackTracking.Server;
 
 public class BackNew {
-    public static void backTracking(BackTrackingInterN solution){
+    public static void backTracking(BackServer solution){
         if (solution.bt()){
             solution.handleSolution();
         }else{
