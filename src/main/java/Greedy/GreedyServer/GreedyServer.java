@@ -43,13 +43,13 @@ public class GreedyServer {
             int bestServer = 0;
             for (Server s : servers){
                 Double distance = Haversine.distance(users[i].getLatitude(),users[i].getLongitude(),s.getLocation().get(0),s.getLocation().get(1));
-                if (s.activitie < bestActivitie && distance < bestDistance){
+                if (s.activity < bestActivitie && distance < bestDistance){
                     bestServer = Integer.parseInt(s.getId());
-                    bestActivitie = s.activitie;
+                    bestActivitie = s.activity;
                     bestDistance = distance;
                 }
             }
-            servers[bestServer-1].activitie += users[i].getActivity();
+            servers[bestServer-1].activity += users[i].getActivity();
             solution[i] = bestServer;
             globalDistance += bestDistance;
         }
@@ -58,11 +58,11 @@ public class GreedyServer {
         Double mayor = Double.MIN_VALUE;
         Double menor = Double.MAX_VALUE;
         for (Server s : servers){
-            if (s.activitie > mayor){
-                mayor = s.activitie;
+            if (s.activity > mayor){
+                mayor = s.activity;
             }
-            if (s.activitie < menor){
-                menor = s.activitie;
+            if (s.activity < menor){
+                menor = s.activity;
             }
         }
         System.out.println(mayor-menor);

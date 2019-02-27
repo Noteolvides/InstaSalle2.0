@@ -1,5 +1,6 @@
 package Greedy_BranchBound.Dist;
 
+import Greedy.GreedyDist.Greedy;
 import Greedy.GreedyDist.GreedyDist;
 import Greedy.GreedyServer.GreedyServer;
 import Json.ConnectsTo;
@@ -26,16 +27,17 @@ public class BranchboundDist {
 
         int from = 1;
         int to = 4;
-        BranchboundDist bbd = new BranchboundDist(nodes,from,to);
+        GreedyDist greedy = new GreedyDist(nodes, from, to);
+        Greedy.greedy(from - 1, to, greedy);
+        BranchboundDist bbd = new BranchboundDist(nodes,from,to, greedy);
     }
 
 
 
-    public BranchboundDist(Nodes[] nodes, int inicial, int fin) throws CloneNotSupportedException {
+    public BranchboundDist(Nodes[] nodes, int inicial, int fin, GreedyDist greedyDist) throws CloneNotSupportedException {
         this.nodes = nodes;
         this.inicial = inicial-1;
         this.fin = fin;
-        GreedyDist greedyDist = new GreedyDist(nodes, inicial, fin); //no fa el greedy
         Solution greedy = greedySolution(greedyDist);
         BranchBound(greedy);
     }
@@ -43,8 +45,8 @@ public class BranchboundDist {
     private Solution greedySolution(GreedyDist greedy) {
         Solution greedy_sol = new Solution();
         greedy_sol.setCost(greedy.getBest());
-        for (Integer pos:greedy.winPath){
-            greedy_sol.track.add(nodes[pos]);
+        for (Integer pos:greedy.winPath) {
+            greedy_sol.track.add(nodes[pos - 1]);
         }
         return greedy_sol;
     }
@@ -85,7 +87,6 @@ public class BranchboundDist {
         ArrayList<Solution> options = new ArrayList<Solution>();
         nodes[inicial].setSelected();
         x.track.add(nodes[inicial]);
-        best.setCost(Integer.MAX_VALUE);
         lives_nodes.add(x);
 
         while (lives_nodes.size() != 0){

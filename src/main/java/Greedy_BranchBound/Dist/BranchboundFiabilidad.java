@@ -1,5 +1,6 @@
 package Greedy_BranchBound.Dist;
 
+import Greedy.GreedyDist.Greedy;
 import Greedy.GreedyDist.GreedyFiable;
 import Json.ConnectsTo;
 import Json.Nodes;
@@ -32,7 +33,8 @@ public class BranchboundFiabilidad {
         this.nodes = nodes;
         this.inicial = inicial-1;
         this.fin = fin;
-        GreedyFiable greedyFiable = new GreedyFiable(nodes, inicial, fin); //no fa el greedy
+        GreedyFiable greedyFiable = new GreedyFiable(nodes, inicial, fin);
+        Greedy.greedy(inicial -1, fin, greedyFiable);
         Solution greedy = greedySolution(greedyFiable);
         BranchBound(greedy);
     }
@@ -41,7 +43,7 @@ public class BranchboundFiabilidad {
         Solution greedy_sol = new Solution();
         greedy_sol.setCost((double)greedy.getBest());
         for (Integer pos:greedy.winPath){
-            greedy_sol.track.add(nodes[pos]);
+            greedy_sol.track.add(nodes[pos-1]);
         }
         return greedy_sol;
     }
@@ -83,7 +85,6 @@ public class BranchboundFiabilidad {
         nodes[inicial].setSelected();
         x.track.add(nodes[inicial]);
         x.setCost(nodes[inicial].getReliability());
-        best.setCost(0.0);
         lives_nodes.add(x);
 
         while (lives_nodes.size() != 0){

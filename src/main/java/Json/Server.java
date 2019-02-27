@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import javax.xml.transform.dom.DOMLocator;
 
 public class Server {
-    public Double activitie = 0.0;
+    public Double activity = 0.0;
     private String id;
 
     private String country;
