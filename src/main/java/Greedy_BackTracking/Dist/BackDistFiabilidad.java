@@ -14,7 +14,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+// TODO: 2019-03-01 No devuelve bien la informacion, el path
 public class BackDistFiabilidad {
     public static void main(String[] args) throws FileNotFoundException {
         Gson gson = new GsonBuilder().create();
