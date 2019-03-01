@@ -38,6 +38,9 @@ public class BranchboundFiabilidad {
         GreedyFiable greedyFiable = new GreedyFiable(nodes, inicial, fin);
         Greedy.greedy(inicial -1, fin, greedyFiable);
         Solution greedy = greedySolution(greedyFiable);
+        for (int i = 0; i < nodes.length; i++){
+            nodes[i].clearSelected();
+        }
         BranchBound(greedy);
     }
 

@@ -31,6 +31,9 @@ public class BranchboundDist {
         int to = 4;
         GreedyDist greedy = new GreedyDist(nodes, from, to);
         Greedy.greedy(from - 1, to, greedy);
+        for (int i = 0; i < nodes.length; i++){
+            nodes[i].clearSelected();
+        }
         BranchboundDist bbd = new BranchboundDist(nodes,from,to, greedy);
     }
 

@@ -14,7 +14,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-// TODO: 2019-03-01 No devuelve bien la informacion, el path
+// TODO: 2019-03-01 No devuelve bien la informacion, el path, ni la mejor solucion
 public class BackDistFiabilidad {
     public static void main(String[] args) throws FileNotFoundException {
         Gson gson = new GsonBuilder().create();
@@ -31,6 +31,9 @@ public class BackDistFiabilidad {
         int to = 4;
         GreedyFiable greedy = new GreedyFiable(nodes, from, to);
         Greedy.greedy(from -1, to, greedy);
+        for (int i = 0; i < nodes.length; i++){
+            nodes[i].clearSelected();
+        }
         BackDistFiabilidad bd = new BackDistFiabilidad(nodes,from,to, greedy);
         BacktrackingFiable.backTracking(from-1,nodes[from-1].getReliability().floatValue(),bd);
         System.out.println(bd.getBest());

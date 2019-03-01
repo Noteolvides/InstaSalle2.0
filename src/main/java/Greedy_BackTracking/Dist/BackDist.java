@@ -13,7 +13,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-// TODO: 2019-03-01 No devuelve bien la informacion, el path
+// TODO: 2019-03-01 No devuelve bien la informacion, el path, ni la mejor solucion
 
 public class BackDist {
     public static void main(String[] args) throws FileNotFoundException {
@@ -31,6 +31,9 @@ public class BackDist {
         int to = 4;
         GreedyDist greedy = new GreedyDist(nodes, from, to);
         Greedy.greedy(from -1, to, greedy);
+        for (int i = 0; i < nodes.length; i++){
+            nodes[i].clearSelected();
+        }
         BackDist bd = new BackDist(nodes,from,to, greedy);
         BacktrackingDist.backTracking(from-1,0,bd);
         System.out.println(bd.getBest());
@@ -39,7 +42,7 @@ public class BackDist {
     private Nodes[] nodes;
     private int from;
     private int to;
-    private int best = 999999;
+    private int best;
     public ArrayList<Integer> pathTemp = new ArrayList<Integer>();
     public ArrayList winPath;
     public BackDist(Nodes[] nodes, int from, int to, GreedyDist greedy) {
