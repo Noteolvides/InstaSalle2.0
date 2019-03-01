@@ -1,6 +1,7 @@
 package Greedy_BranchBound.Server;
 
 import BackTracking.BackTrackingServer.Haversine;
+import Greedy.GreedyServer.GreedyServer;
 import Json.Nodes;
 import Json.Server;
 import Json.User;
@@ -24,8 +25,9 @@ public class BranchboundServer {
             users[c].setId(c);
             users[c].setUbication();
         }
+        GreedyServer greedy = new GreedyServer(users,servers);
         BranchboundServer sd = new BranchboundServer(users,servers);
-        Solution wins = sd.Branchbound();
+        Solution wins = sd.Branchbound(greedy);
         //System.out.println(wins);
         //sd.printArray(wins.users);
         System.out.println("La distancia minima es : " + wins.costDist);
@@ -84,7 +86,7 @@ public class BranchboundServer {
 
 
 
-    public Solution Branchbound() {
+    public Solution Branchbound(GreedyServer greedy) {
         Solution x = new Solution();
         Solution best = new Solution();
         PriorityQueue<Solution> live_nodes = new PriorityQueue<Solution>(usuarios.length, new Comparator<Solution>(){
@@ -97,7 +99,7 @@ public class BranchboundServer {
                 return (int) ((aux2 - aux1)*1000000000);
         }});
 
-        best.costDist = Double.MAX_VALUE;
+        best.costDist = greedy.getGlobalDistance();
         for (int i = 0; i < best.actividadServidores.length; i++){
             best.actividadServidores[i] = Double.MAX_VALUE;
         }
