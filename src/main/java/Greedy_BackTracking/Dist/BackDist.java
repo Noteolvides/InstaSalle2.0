@@ -13,7 +13,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-// TODO: 2019-03-01 No devuelve bien la informacion, el path, ni la mejor solucion
 
 public class BackDist {
     public static void main(String[] args) throws FileNotFoundException {

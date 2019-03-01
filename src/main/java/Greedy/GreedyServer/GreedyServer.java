@@ -15,6 +15,7 @@ import java.util.Arrays;
 public class GreedyServer {
     private User[] users;
     private Server[] servers;
+    private Double globalDistance = 0.0;
 
     public GreedyServer(User[] users, Server[] servers) {
         this.users = users;
@@ -22,6 +23,7 @@ public class GreedyServer {
         Greedy();
     }
 
+    // TODO: 2019-03-01 Hacer el print en el main
     public static void main(String[] args) throws FileNotFoundException {
         Gson gson = new GsonBuilder().create();
         User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
@@ -35,7 +37,6 @@ public class GreedyServer {
     }
 
     public void Greedy(){
-        Double globalDistance = 0.0;
         int[] solution = new int[users.length];
         for(int i = 0 ; i < users.length ; i++){
             Double bestDistance = Double.MAX_VALUE;
@@ -68,5 +69,7 @@ public class GreedyServer {
         System.out.println(mayor-menor);
     }
 
-
+    public Double getGlobalDistance() {
+        return globalDistance;
+    }
 }

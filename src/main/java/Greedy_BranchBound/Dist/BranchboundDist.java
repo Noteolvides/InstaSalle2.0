@@ -14,7 +14,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
-// TODO: 2019-03-01 Da la solucion del greedy
 
 public class BranchboundDist {
     public static void main(String[] args) throws FileNotFoundException, CloneNotSupportedException {

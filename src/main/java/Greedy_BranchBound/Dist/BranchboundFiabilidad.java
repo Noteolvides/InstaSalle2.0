@@ -14,7 +14,6 @@ import java.io.FileReader;
 import java.util.*;
 
 
-// TODO: 2019-03-01 No da la mejor solucion
 public class BranchboundFiabilidad {
     public static void main(String[] args) throws FileNotFoundException, CloneNotSupportedException {
         Gson gson = new GsonBuilder().create();
