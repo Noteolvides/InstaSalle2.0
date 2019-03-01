@@ -28,19 +28,21 @@ public class BranchboundFiabilidad {
 
         int from = 1;
         int to = 4;
-        BranchboundFiabilidad bbd = new BranchboundFiabilidad(nodes,from,to);
-    }
-
-    public BranchboundFiabilidad(Nodes[] nodes, int inicial, int fin) throws CloneNotSupportedException {
-        this.nodes = nodes;
-        this.inicial = inicial-1;
-        this.fin = fin;
-        GreedyFiable greedyFiable = new GreedyFiable(nodes, inicial, fin);
-        Greedy.greedy(inicial -1, fin, greedyFiable);
-        Solution greedy = greedySolution(greedyFiable);
+        GreedyFiable greedyFiable = new GreedyFiable(nodes, from, to);
+        Greedy.greedy(from -1, to, greedyFiable);
         for (int i = 0; i < nodes.length; i++){
             nodes[i].clearSelected();
         }
+        BranchboundFiabilidad bbd = new BranchboundFiabilidad(nodes,from,to, greedyFiable);
+    }
+
+    public BranchboundFiabilidad(Nodes[] nodes, int inicial, int fin, GreedyFiable greedyFiable) throws CloneNotSupportedException {
+        this.nodes = nodes;
+        this.inicial = inicial-1;
+        this.fin = fin;
+
+        Solution greedy = greedySolution(greedyFiable);
+
         BranchBound(greedy);
     }
 
