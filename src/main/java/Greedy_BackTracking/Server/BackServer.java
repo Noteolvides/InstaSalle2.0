@@ -1,5 +1,6 @@
 package Greedy_BackTracking.Server;
 
+import Greedy.GreedyServer.GreedyServer;
 import Json.Nodes;
 import Json.Server;
 import Json.User;
@@ -21,7 +22,8 @@ public class BackServer {
             users[c].setId(c);
             users[c].setUbication();
         }
-        BackServer sd = new BackServer(users,servers);
+        GreedyServer greedy = new GreedyServer(users,servers);
+        BackServer sd = new BackServer(users,servers, greedy);
         BackNew.backTracking(sd);
         sd.printArray(sd.wins);
         System.out.println("La distancia minima es : " + sd.minimaDistancia);
@@ -45,12 +47,13 @@ public class BackServer {
     private int[] actividadActualServidores;
     private int puntero = 0;
 
-    public BackServer(User[] usuarios, Server[] servidores) {//Pasar UsersId Por Orden Mejor pero da igual
+    public BackServer(User[] usuarios, Server[] servidores, GreedyServer greedy) {//Pasar UsersId Por Orden Mejor pero da igual
         this.usuarios = usuarios;
         this.servidores = servidores;
         reparticion = new int[usuarios.length];
         wins = new int[usuarios.length];
         actividadActualServidores = new int[servidores.length];
+
     }
 
 
