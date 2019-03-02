@@ -13,7 +13,7 @@ public class Server {
 
     private List<Double> location = null;
     @SerializedName("reachable_from")
-    private int reachableFrom;
+    private int[] reachableFrom;
 
     public String getId() {
         return id;
@@ -37,14 +37,6 @@ public class Server {
 
     public void setLocation(List<Double> location) {
         this.location = location;
-    }
-
-    public int getReachableFrom() {
-        return reachableFrom;
-    }
-
-    public void setReachableFrom(int reachableFrom) {
-        this.reachableFrom = reachableFrom;
     }
 
 }

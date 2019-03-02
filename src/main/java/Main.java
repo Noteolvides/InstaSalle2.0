@@ -17,82 +17,74 @@ import com.google.gson.GsonBuilder;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class Main {
 
-    public static User[] users;
-    public static Nodes[] nodes;
-    public static Server[] servers;
+    public static String users;
+    public static String nodes;
+    public static String servers;
 
     public static void main(String[] args) throws FileNotFoundException, CloneNotSupportedException {
 
         int file = 0;
 
-        do {
-            System.out.println("Seleccione el dataset a utilizar");
-            Scanner sc = new Scanner(System.in);
-            System.out.println("1 - Datasets");
-            System.out.println("2 - Datasets++");
-            System.out.println("3 - Otros");
-            System.out.println("4 - Salir");
-            file = sc.nextInt();
-            Gson gson = new GsonBuilder().create();
-            switch (file){
-                case 1:
-                    users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
-                    nodes = gson.fromJson(new FileReader("Datasets/nodes.json"), Nodes[].class);
-                    servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
-                    break;
-                case 2:
-                    users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
-                    nodes = gson.fromJson(new FileReader("Datasets/datasets++/nodes_plus.json"), Nodes[].class);
-                    servers = gson.fromJson(new FileReader("Datasets/datasets++/servers_plus.json"), Server[].class);
-                    break;
-                case 3:
-                    System.out.println("Introduce el path de users");
-                    String path = sc.next();
-                    users = gson.fromJson(new FileReader(path), User[].class);
-                    System.out.println("Introduce el path de nodes");
-                    path = sc.next();
-                    nodes = gson.fromJson(new FileReader(path), Nodes[].class);
-                    System.out.println("Introduce el path de servers");
-                    path = sc.next();
-                    servers = gson.fromJson(new FileReader(path), Server[].class);
-                    break;
-                case 4:
-                    break;
-            }
-        } while (file != 4);
+        System.out.println("Seleccione el dataset a utilizar");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("1 - Datasets");
+        System.out.println("2 - Datasets++");
+        System.out.println("3 - Otros");
+        System.out.println("4 - Salir");
+        file = sc.nextInt();
+        switch (file) {
+            case 1:
+                users = "Datasets/users.json";
+                nodes = "Datasets/nodes.json";
+                servers = "Datasets/servers.json";
+                break;
+            case 2:
+                users = "Datasets/users.json";
+                nodes = "Datasets/nodes_plus.json";
+                servers = "Datasets/servers_plus.json";
+                break;
+            case 3:
+                System.out.println("Introduce el path de users");
+                users = "Datasets/" + sc.next();
+                System.out.println("Introduce el path de nodes");
+                nodes = "Datasets/" + sc.next();
+                System.out.println("Introduce el path de servers");
+                servers = "Datasets/" + sc.next();
+                break;
+        }
 
 
         int option = 0;
 
         do {
             System.out.println("Bienvenido a la seleccion de programa");
-            Scanner sc = new Scanner(System.in);
 
             System.out.println("1 - Distancia entre nodos");
             System.out.println("2 - Fiabilidad entre nodos");
             System.out.println("3 - Repartir usuarios");
             System.out.println("4 - Salir");
             option = sc.nextInt();
-            switch (option){
-                case 1 :
-                    caso1(args);
+            switch (option) {
+                case 1:
+                    caso1();
                     break;
                 case 2:
-                    caso2(args);
+                    caso2();
                     break;
                 case 3:
-                    caso3(args);
+                    caso3();
                     break;
                 case 4:
                     break;
             }
-        }while (option != 4);
+        } while (option != 4);
     }
 
-    static void caso1(String[] args) throws FileNotFoundException, CloneNotSupportedException {
+    static void caso1() throws FileNotFoundException, CloneNotSupportedException {
 
         int option = 0;
         do {
@@ -105,7 +97,13 @@ public class Main {
             System.out.println("\t5 - Recorrido de nodo a nodo por distancia con greedy + Branch");
             System.out.println("\t6 - Volver");
             option = sc.nextInt();
-            switch (option){
+            String[] args = null;
+            if (option != 6){
+                int[] nodos = seleccionDeNodos();
+                args = new String[]{users, nodes, servers, nodos[0] + "", nodos[1] + ""};
+            }
+            long startTime = System.nanoTime();
+            switch (option) {
                 case 1:
                     BackDist.main(args);
                     break;
@@ -124,10 +122,22 @@ public class Main {
                 case 6:
                     break;
             }
-        }while (option != 6);
+            long endTime = System.nanoTime();
+            System.out.println("El tiempo que el programa a tardado es: " + (endTime - startTime) / (float)1000000000 + " Segundos");
+        } while (option != 6);
     }
 
-    static void caso2(String[] args) throws FileNotFoundException, CloneNotSupportedException {
+    private static int[] seleccionDeNodos() {
+        int[] nodos = new int[2];
+        Scanner sc = new Scanner(System.in);
+        System.out.println("¿A que nodo quieres ir?");
+        nodos[0] = sc.nextInt();
+        System.out.println("A que nodo quieres llegar?");
+        nodos[1] = sc.nextInt();
+        return nodos;
+    }
+
+    static void caso2() throws FileNotFoundException, CloneNotSupportedException {
         int option;
         do {
             System.out.println("\nFiabilidad entre nodos");
@@ -139,7 +149,13 @@ public class Main {
             System.out.println("\t5 - Recorrido de nodo a nodo por fiabilidad con greedy + Branch");
             System.out.println("\t6 - Volver");
             option = sc.nextInt();
-            switch (option){
+            String[] args = null;
+            if (option != 6){
+                int[] nodos = seleccionDeNodos();
+                args = new String[]{users, nodes, servers, nodos[0] + "", nodos[1] + ""};
+            }
+            long startTime = System.nanoTime();
+            switch (option) {
                 case 1:
                     BackDistFiabilidad.main(args);
                     break;
@@ -158,10 +174,12 @@ public class Main {
                 case 6:
                     break;
             }
-        }while (option != 6);
+            long endTime = System.nanoTime();
+            System.out.println("El tiempo que el programa a tardado es: " + (endTime - startTime) / (float)1000000000 + " Segundos");
+        } while (option != 6);
     }
 
-    static void caso3(String[] args) throws FileNotFoundException {
+    static void caso3() throws FileNotFoundException {
         int option = 0;
         do {
             System.out.println("\nRepartir usuarios");
@@ -173,7 +191,9 @@ public class Main {
             System.out.println("\t5 - Repartir usuarios con greedy + branch");
             System.out.println("\t6 - Volver");
             option = sc.nextInt();
-            switch (option){
+            String[] args = new String[]{users,servers};
+            long startTime = System.nanoTime();
+            switch (option) {
                 case 1:
                     BackServer.main(args);
                     break;
@@ -192,7 +212,9 @@ public class Main {
                 case 6:
                     break;
             }
-        }while (option != 6);
+            long endTime = System.nanoTime();
+            System.out.println("El tiempo que el programa a tardado es: " + (endTime - startTime) / (float)1000000000 + " Segundos");
+        } while (option != 6);
     }
 }
 

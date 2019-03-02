@@ -15,17 +15,9 @@ import java.util.Arrays;
 public class BackDistFiabilidad {
     public static void main(String[] args) throws FileNotFoundException {
         Gson gson = new GsonBuilder().create();
-        User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
-        Nodes[] nodes = gson.fromJson(new FileReader("Datasets/nodes.json"), Nodes[].class);
-        Server[] servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
-        for (int c = 0; c < users.length; c++) {
-            users[c].setId(c);
-            users[c].setUbication();
-        }
-
-        ArrayList<User> usersList= new ArrayList<User>(Arrays.asList(users));
-        int from = 1;
-        int to = 4;
+        Nodes[] nodes = gson.fromJson(new FileReader(args[1]), Nodes[].class);
+        int from = Integer.parseInt(args[3]);
+        int to = Integer.parseInt(args[4]);
         BackDistFiabilidad bd = new BackDistFiabilidad(nodes,from,to);
         BacktrackingFiable.backTracking(from-1,nodes[from-1].getReliability().floatValue(),bd);
         System.out.println(bd.getBest());

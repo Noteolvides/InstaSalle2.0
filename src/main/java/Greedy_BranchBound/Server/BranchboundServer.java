@@ -18,9 +18,8 @@ public class BranchboundServer {
 
     public static void main(String[] args) throws FileNotFoundException {
         Gson gson = new GsonBuilder().create();
-        User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
-        Nodes[] nodes = gson.fromJson(new FileReader("Datasets/nodes.json"), Nodes[].class);
-        Server[] servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
+        User[] users = gson.fromJson(new FileReader(args[0]), User[].class);
+        Server[] servers = gson.fromJson(new FileReader(args[1]), Server[].class);
         for (int c = 0; c < users.length; c++) {
             users[c].setId(c);
             users[c].setUbication();
@@ -28,23 +27,21 @@ public class BranchboundServer {
         GreedyServer greedy = new GreedyServer(users,servers);
         BranchboundServer sd = new BranchboundServer(users,servers);
         Solution wins = sd.Branchbound(greedy);
-        //System.out.println(wins);
-        //sd.printArray(wins.users);
+        sd.printArray(wins.users,users);
         System.out.println("La distancia minima es : " + wins.costDist);
         System.out.println("La Actividad minima es : " + wins.diference);
     }
 
-    private void printArray(Server[] x) {
+    private void printArray(Server[] x, User[] users) {
         for (int i = 0; i < x.length; i++) {
-            System.out.println(x[i].getId());
+            System.out.println("El usuario: " + users[i].getUsername());
+            System.out.println("Esta en el server: " + x[i].getCountry());
         }
         System.out.println();
     }
 
     private User[] usuarios;
     private Server[] servidores;
-    private double actualDistancia = 0;
-    private int puntero = 0;
 
     private class Solution{
 

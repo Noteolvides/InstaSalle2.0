@@ -15,9 +15,8 @@ public class BackServer {
 
     public static void main(String[] args) throws FileNotFoundException {
         Gson gson = new GsonBuilder().create();
-        User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
-        Nodes[] nodes = gson.fromJson(new FileReader("Datasets/nodes.json"), Nodes[].class);
-        Server[] servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
+        User[] users = gson.fromJson(new FileReader(args[0]), User[].class);
+        Server[] servers = gson.fromJson(new FileReader(args[1]), Server[].class);
         for (int c = 0; c < users.length; c++) {
             users[c].setId(c);
             users[c].setUbication();
@@ -25,14 +24,16 @@ public class BackServer {
         GreedyServer greedy = new GreedyServer(users,servers);
         BackServer sd = new BackServer(users,servers, greedy);
         BackNew.backTracking(sd);
-        sd.printArray(sd.wins);
+        System.out.println("Asi es como quedan estarian los usuarios");;
+        sd.printArray(sd.wins,users,servers);
         System.out.println("La distancia minima es : " + sd.minimaDistancia);
         System.out.println("La Actividad minima es : " + sd.minimaActividad);
     }
 
-    private void printArray(int[] x) {
+    private void printArray(int[] x, User[] users,Server[] servers) {
         for (int i = 0; i < x.length; i++) {
-            System.out.println(x[i]);
+            System.out.println("El usuario: " + users[i].getUsername());
+            System.out.println("Esta en el servidor: " + servers[x[i]-1].getCountry() + "\n");
         }
         System.out.println();
     }
@@ -67,12 +68,6 @@ public class BackServer {
             minimaActividad = aux;
             minimaDistancia = distanciaActual;
             wins = reparticion.clone();
-/*
-            printArray(wins);
-            System.out.println("La Minima distancia es " + minimaDistancia);
-            System.out.println("La Minima actividad es " + minimaActividad);
-            printArray(actividadActualServidores);
-*/
         }
     }
 

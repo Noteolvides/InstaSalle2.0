@@ -17,16 +17,9 @@ import java.util.*;
 public class BranchboundFiabilidad {
     public static void main(String[] args) throws FileNotFoundException, CloneNotSupportedException {
         Gson gson = new GsonBuilder().create();
-        User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
-        Nodes[] nodes = gson.fromJson(new FileReader("Datasets/nodes.json"), Nodes[].class);
-        Server[] servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
-        for (int c = 0; c < users.length; c++) {
-            users[c].setId(c);
-        }
-        ArrayList<User> usersList= new ArrayList<User>(Arrays.asList(users));
-
-        int from = 1;
-        int to = 4;
+        Nodes[] nodes = gson.fromJson(new FileReader(args[1]), Nodes[].class);
+        int from = Integer.parseInt(args[3]);
+        int to = Integer.parseInt(args[4]);
         GreedyFiable greedyFiable = new GreedyFiable(nodes, from, to);
         Greedy.greedy(from -1, to, greedyFiable);
         for (int i = 0; i < nodes.length; i++){
