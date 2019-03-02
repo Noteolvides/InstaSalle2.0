@@ -4,23 +4,14 @@ import BackTracking.BackTrackingServer.Haversine;
 import Json.Nodes;
 import Json.Server;
 import Json.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import javax.xml.transform.dom.DOMLocator;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class BranchboundServer {
 
 
-    public static void main(String[] args) throws FileNotFoundException {
-        Gson gson = new GsonBuilder().create();
-        User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
-        Nodes[] nodes = gson.fromJson(new FileReader("Datasets/nodes.json"), Nodes[].class);
-        Server[] servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
+    public static void main(String[] args, User[] users, Nodes[] nodes, Server[] servers)  {
         for (int c = 0; c < users.length; c++) {
             users[c].setId(c);
             users[c].setUbication();

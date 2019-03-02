@@ -2,25 +2,16 @@ package Greedy_BranchBound.Dist;
 
 import Greedy.GreedyDist.Greedy;
 import Greedy.GreedyDist.GreedyDist;
-import Greedy.GreedyServer.GreedyServer;
 import Json.ConnectsTo;
 import Json.Nodes;
 import Json.Server;
 import Json.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.*;
 
 
 public class BranchboundDist {
-    public static void main(String[] args) throws FileNotFoundException, CloneNotSupportedException {
-        Gson gson = new GsonBuilder().create();
-        User[] users = gson.fromJson(new FileReader("Datasets/users.json"), User[].class);
-        Nodes[] nodes = gson.fromJson(new FileReader("Datasets/nodes.json"), Nodes[].class);
-        Server[] servers = gson.fromJson(new FileReader("Datasets/servers.json"), Server[].class);
+    public static void main(String[] args, User[] users, Nodes[] nodes, Server[] servers) throws CloneNotSupportedException {
         for (int c = 0; c < users.length; c++) {
             users[c].setId(c);
         }
