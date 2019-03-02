@@ -3,8 +3,6 @@ package BackTracking.BackTrackingServer;
 import Json.Nodes;
 import Json.Server;
 import Json.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 
 import javax.jws.soap.SOAPBinding;

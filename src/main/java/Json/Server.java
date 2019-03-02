@@ -1,9 +1,8 @@
 package Json;
 
-import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-import javax.xml.transform.dom.DOMLocator;
+import java.util.List;
 
 public class Server {
     public Double activity = 0.0;

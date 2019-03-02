@@ -4,8 +4,6 @@ import BackTracking.BackTrackingServer.Haversine;
 import Json.Nodes;
 import Json.Server;
 import Json.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import javax.swing.plaf.synth.SynthTextAreaUI;
 import javax.xml.transform.dom.DOMLocator;
