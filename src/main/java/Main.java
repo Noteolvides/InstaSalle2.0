@@ -8,11 +8,6 @@ import BranchBound.BranchBoundServer.BranchboundServer;
 import Greedy.GreedyDist.GreedyDist;
 import Greedy.GreedyDist.GreedyFiable;
 import Greedy.GreedyServer.GreedyServer;
-import Json.Nodes;
-import Json.Server;
-import Json.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -27,14 +22,13 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException, CloneNotSupportedException {
 
-        int file;
+        int file = 0;
 
         System.out.println("Seleccione el dataset a utilizar");
         Scanner sc = new Scanner(System.in);
         System.out.println("1 - Datasets");
         System.out.println("2 - Datasets++");
         System.out.println("3 - Otros");
-        System.out.println("4 - Salir");
         file = sc.nextInt();
         switch (file) {
             case 1:
@@ -57,8 +51,8 @@ public class Main {
                 break;
         }
 
-    private static void algorsimo(String[] args) throws CloneNotSupportedException {
-        int option;
+
+        int option = 0;
 
         do {
             System.out.println("Bienvenido a la seleccion de programa");
@@ -66,7 +60,7 @@ public class Main {
             System.out.println("1 - Distancia entre nodos");
             System.out.println("2 - Fiabilidad entre nodos");
             System.out.println("3 - Repartir usuarios");
-            System.out.println("4 - Volver");
+            System.out.println("4 - Salir");
             option = sc.nextInt();
             switch (option) {
                 case 1:
@@ -105,19 +99,19 @@ public class Main {
             long startTime = System.nanoTime();
             switch (option) {
                 case 1:
-                    BackDist.main(args, users, nodes, servers);
+                    BackDist.main(args);
                     break;
                 case 2:
-                    BranchboundDist.main(args, users, nodes, servers);
+                    BranchboundDist.main(args);
                     break;
                 case 3:
-                    GreedyDist.main(args, users, nodes, servers);
+                    GreedyDist.main(args);
                     break;
                 case 4:
-                    Greedy_BackTracking.Dist.BackDist.main(args, users, nodes, servers);
+                    Greedy_BackTracking.Dist.BackDist.main(args);
                     break;
                 case 5:
-                    Greedy_BranchBound.Dist.BranchboundDist.main(args, users, nodes, servers);
+                    Greedy_BranchBound.Dist.BranchboundDist.main(args);
                     break;
                 case 6:
                     break;
@@ -157,19 +151,19 @@ public class Main {
             long startTime = System.nanoTime();
             switch (option) {
                 case 1:
-                    BackDistFiabilidad.main(args, users, nodes, servers);
+                    BackDistFiabilidad.main(args);
                     break;
                 case 2:
-                    BranchboundFiabilidad.main(args, users, nodes, servers);
+                    BranchboundFiabilidad.main(args);
                     break;
                 case 3:
-                    GreedyFiable.main(args, users, nodes, servers);
+                    GreedyFiable.main(args);
                     break;
                 case 4:
-                    Greedy_BackTracking.Dist.BackDistFiabilidad.main(args, users, nodes, servers);
+                    Greedy_BackTracking.Dist.BackDistFiabilidad.main(args);
                     break;
                 case 5:
-                    Greedy_BranchBound.Dist.BranchboundFiabilidad.main(args, users, nodes, servers);
+                    Greedy_BranchBound.Dist.BranchboundFiabilidad.main(args);
                     break;
                 case 6:
                     break;
@@ -195,19 +189,19 @@ public class Main {
             long startTime = System.nanoTime();
             switch (option) {
                 case 1:
-                    BackServer.main(args, users, nodes, servers);
+                    BackServer.main(args);
                     break;
                 case 2:
-                    BranchboundServer.main(args, users, nodes, servers);
+                    BranchboundServer.main(args);
                     break;
                 case 3:
-                    GreedyServer.main(args, users, nodes, servers);
+                    GreedyServer.main(args);
                     break;
                 case 4:
-                    Greedy_BackTracking.Server.BackServer.main(args, users, nodes, servers);
+                    Greedy_BackTracking.Server.BackServer.main(args);
                     break;
                 case 5:
-                    Greedy_BranchBound.Server.BranchboundServer.main(args, users, nodes, servers);
+                    Greedy_BranchBound.Server.BranchboundServer.main(args);
                     break;
                 case 6:
                     break;
