@@ -13,24 +13,21 @@ import java.util.Random;
 
 public class GeneratorOfUsers {
 
-    private static final int numeroOfUsers = 20;
-
-    static int generaNumeroInt(int min, int max) {
+    private static int generaNumeroInt(int min, int max) {
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
     }
 
-    static double generaNumeroDouble(int min, int max) {
+    private static double generaNumeroDouble(int min, int max) {
         Random r = new Random();
         return min + (max - min) * r.nextDouble();
     }
 
     public static void main(String[] args) throws IOException {
-        UserG[] users = new UserG[numeroOfUsers];
+        UserG[] users = new UserG[10];
         for (int i = 0; i < users.length; i++) {
             users[i] = new UserG();
-            users[i].setActivity(GeneratorOfUsers.generaNumeroInt(1,9));
-            users[i].setUsername((i+1)+"");
+            users[i].setActivity(GeneratorOfUsers.generaNumeroInt(1,50));
             List <Post> posts = new ArrayList<Post>();
             List <Double> location = new ArrayList<Double>();
             Post p = new Post();
@@ -46,7 +43,7 @@ public class GeneratorOfUsers {
         Gson gson = new Gson();
         String jsonInString = gson.toJson(users);
         System.out.println(jsonInString);
-        FileWriter fileWriter = new FileWriter("Datasets/usersRandom"+numeroOfUsers+".json");
+        FileWriter fileWriter = new FileWriter("usersNew.json");
         PrintWriter printWriter = new PrintWriter(fileWriter);
         printWriter.print(jsonInString);
         printWriter.close();

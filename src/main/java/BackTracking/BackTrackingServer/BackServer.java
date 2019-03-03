@@ -76,13 +76,13 @@ public class BackServer {
     }
 
     private Double getDistanceActivity() {
-        Double minor = Double.MAX_VALUE ,mayor = Double.MIN_VALUE;
+        float minor = 99999 ,mayor =0;
         for (int i = 0; i < actividadActualServidores.length ; i++) {
             if (actividadActualServidores[i] > mayor){
-                mayor = (Double)(double) actividadActualServidores[i];
+                mayor = actividadActualServidores[i];
             }
             if (actividadActualServidores[i] < minor && actividadActualServidores[i] != 0){
-                minor = (Double)(double) actividadActualServidores[i];
+                minor = actividadActualServidores[i];
             }
             if(actividadActualServidores[i] == 0){
                 return Double.MAX_VALUE;
