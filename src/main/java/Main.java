@@ -84,11 +84,11 @@ public class Main {
         do {
             System.out.println("\nDistancia entre nodos");
             Scanner sc = new Scanner(System.in);
-            System.out.println("\t1 - Recorrido de nodo a nodo por distancia por Back");
-            System.out.println("\t2 - Recorrido de nodo a nodo por distancia por Branch");
+            System.out.println("\t1 - Recorrido de nodo a nodo por distancia por BackTracking");
+            System.out.println("\t2 - Recorrido de nodo a nodo por distancia por Branch&Bound");
             System.out.println("\t3 - Recorrido de nodo a nodo por distancia por Greedy");
-            System.out.println("\t4 - Recorrido de nodo a nodo por distancia con greedy + Back");
-            System.out.println("\t5 - Recorrido de nodo a nodo por distancia con greedy + Branch");
+            System.out.println("\t4 - Recorrido de nodo a nodo por distancia con Greedy + BackTracking");
+            System.out.println("\t5 - Recorrido de nodo a nodo por distancia con Greedy + Branch&Bound");
             System.out.println("\t6 - Volver");
             option = sc.nextInt();
             String[] args = null;
@@ -136,11 +136,11 @@ public class Main {
         do {
             System.out.println("\nFiabilidad entre nodos");
             Scanner sc = new Scanner(System.in);
-            System.out.println("\t1 - Recorrido de nodo a nodo por fiabilidad por Back");
-            System.out.println("\t2 - Recorrido de nodo a nodo por fiabilidad por Branch");
+            System.out.println("\t1 - Recorrido de nodo a nodo por fiabilidad por BackTracking");
+            System.out.println("\t2 - Recorrido de nodo a nodo por fiabilidad por Branch&Bound");
             System.out.println("\t3 - Recorrido de nodo a nodo por fiabilidad por Greedy");
-            System.out.println("\t4 - Recorrido de nodo a nodo por fiabilidad con greedy + Back");
-            System.out.println("\t5 - Recorrido de nodo a nodo por fiabilidad con greedy + Branch");
+            System.out.println("\t4 - Recorrido de nodo a nodo por fiabilidad con Greedy + BackTracking");
+            System.out.println("\t5 - Recorrido de nodo a nodo por fiabilidad con Greedy + Branch&Bound");
             System.out.println("\t6 - Volver");
             option = sc.nextInt();
             String[] args = null;
@@ -178,11 +178,11 @@ public class Main {
         do {
             System.out.println("\nRepartir usuarios");
             Scanner sc = new Scanner(System.in);
-            System.out.println("\t1 - Repartir usuarios con bactra");
-            System.out.println("\t2 - Repartir usuarios con branch");
-            System.out.println("\t3 - Repartir usuarios con greedy");
-            System.out.println("\t4 - Repartir usuarios con greeddy + Backtra");
-            System.out.println("\t5 - Repartir usuarios con greedy + branch");
+            System.out.println("\t1 - Repartir usuarios con BackTracking");
+            System.out.println("\t2 - Repartir usuarios con Branch&Bound");
+            System.out.println("\t3 - Repartir usuarios con Greedy");
+            System.out.println("\t4 - Repartir usuarios con Greeddy + BackTracking");
+            System.out.println("\t5 - Repartir usuarios con Greedy + Branch&Bound");
             System.out.println("\t6 - Volver");
             option = sc.nextInt();
             String[] args = new String[]{users,servers};
