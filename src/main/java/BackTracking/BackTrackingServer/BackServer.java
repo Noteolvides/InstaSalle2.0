@@ -68,12 +68,6 @@ public class BackServer {
             minimaActividad = aux;
             minimaDistancia = distanciaActual;
             wins = reparticion.clone();
-            /*
-            printArray(wins);
-            System.out.println("La Minima distancia es " + minimaDistancia);
-            System.out.println("La Minima actividad es " + minimaActividad);
-            printArray(actividadActualServidores);
-            */
         }
     }
 

@@ -1,14 +1,12 @@
 package BranchBound.BranchBoundServer;
 
 import BackTracking.BackTrackingServer.Haversine;
-import Json.Nodes;
+
 import Json.Server;
 import Json.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
-import javax.xml.transform.dom.DOMLocator;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Comparator;
@@ -119,7 +117,7 @@ public class BranchboundServer {
                         t.costDist += Haversine.distance(usuarios[t.level].getLatitude(),
                                 usuarios[t.level].getLongitude(), server.getLocation().get(0),
                                 server.getLocation().get(1));
-                        t.actividadServidores[Integer.parseInt(server.getId()) - 1] += usuarios[t.level].getActivity(); //revisar els cost de la activitat
+                        t.actividadServidores[Integer.parseInt(server.getId()) - 1] += usuarios[t.level].getActivity();
                         t.level++;
                         live_nodes.add(t);
                     }
