@@ -1,7 +1,7 @@
 # LaMecaDeLaIrreverencia2.0
 Ejecutar en intellij.
 
-En la linea de comandos abajo apareceran 3 opciones con elecion de donde quieres leer los datasets.
+En la linea de comandos abajo apareceran 3 opciones con la elección de donde quieres leer los datasets.
 
 *  Datasets **Datasets simples**
 *  Datasets ++  **Datasets ++**
